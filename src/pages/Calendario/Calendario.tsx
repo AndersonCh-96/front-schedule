@@ -2,6 +2,7 @@ import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
+import momentTimezonePlugin from "@fullcalendar/moment-timezone";
 import { useEffect, useRef, useState } from "react";
 import { Dialog } from "@/components/ui/dialog";
 import { DialogContent } from "@/components/ui/dialog";
@@ -206,7 +207,7 @@ const Calendario = () => {
 
 
   return (
-    <div className="p-1">
+    <div className="">
       <div className="flex gap-8 mb-2 justify-center">
         <Button onClick={() => {
           calendarRef.current?.getApi().prev();
@@ -238,14 +239,17 @@ const Calendario = () => {
 
           }
         }
-        plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
+
+        plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin, momentTimezonePlugin]}
         initialView="timeGridWeek"
+        timeZone="UTC"
         slotMinTime="08:00:00"
         slotMaxTime="18:00:00"
         locale="es"
+        weekText="10px"
         allDayText="Hora"
         initialDate={new Date()}
-        expandRows
+        // expandRows
         handleWindowResize={true}
         slotLabelFormat={{
           hour: "2-digit",
@@ -324,7 +328,7 @@ const Calendario = () => {
           return (
             <div className="relative flex h-full w-full flex-col items-center justify-center text-center text-xs text-white">
 
-            
+
               <img
                 src={
                   args.event.extendedProps?.roomId?.name === "Sala SmartFit"
@@ -348,20 +352,22 @@ const Calendario = () => {
 
               <div className="absolute inset-0 bg-black/10 z-[1]" />
 
-              <div className="relative z-10 space-y-1 px-1">
-                <p className="font-semibold text-[13px] leading-tight">
+              <div className="relative z-10 space-y-1 px-1 flex items-center mx-auto">
+                {/* <p className="font-semibold text-[13px] leading-tight">
                   {args.event.title}
-                </p>
+                </p> */}
 
-                <p className="text-[10px] truncate">
-                  {args.event.extendedProps.user.email}
-                </p>
+                <div className="flex flex-col">
+                  <p className="text-[12px] truncate font-bold">
+                    {args.event.extendedProps.user.name}
+                  </p>
 
-                <p className="text-[10px]">
-                  {args.event.start?.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
-                  -
-                  {args.event.end?.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
-                </p>
+                  <p className="font-bold text-[12px]">
+                    {args.event.start?.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
+                    -
+                    {args.event.end?.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
+                  </p>
+                </div>
 
                 {isOwner && (
                   <Trash2Icon
