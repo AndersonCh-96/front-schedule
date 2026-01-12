@@ -358,8 +358,8 @@ const Calendario = () => {
               validation.setValues({
                 title: data.title,
                 roomId: data.room.id,
-                startDate: new Date(data.startDate).toISOString().slice(0, 16),
-                endDate: new Date(data.endDate).toISOString().slice(0, 16),
+                startDate: toDatetimeLocal(data.startDate),
+                endDate: toDatetimeLocal(data.endDate),
               })
 
               setOpen(true)
