@@ -18,7 +18,7 @@ import { io } from "socket.io-client";
 //     deleteSchedule: (id: string) => void;
 // }
 
-const url= "https://wellschedule-production.up.railway.app"
+const url = "https://wellschedule-production.up.railway.app"
 
 const SchedulesStore = create<any>((set, get) => ({
 
@@ -40,7 +40,7 @@ const SchedulesStore = create<any>((set, get) => ({
         const data = await response.json()
 
         console.log("data", data)
-        set({ schedules: data.data, loading: false })
+        set({ schedules: data, loading: false })
     },
 
     initSocket: () => {
