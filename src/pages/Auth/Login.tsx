@@ -38,13 +38,13 @@ const Login = () => {
         onSubmit: async (values) => {
 
             const data = await loginUser(values.email, values.password);
-            console.log('data llega', data)
+          
             if (data.success) {
                 navigate("/calendario")
             } else {
                 toast.error(data.error)
             }
-            console.log("Login values:", values);
+
 
         },
     });
@@ -95,7 +95,7 @@ const Login = () => {
 
                         </div>
                         <Button disabled={loading} type="submit" className="w-full cursor-pointer">
-                            {loading ? "Iniciando sesión..." : "Iniciar Sesión"}
+                            Iniciar Sesión
                         </Button>
                     </form>
 

@@ -125,7 +125,7 @@ const Calendario = () => {
         }),
     }),
     onSubmit: async (values: any) => {
-      console.log(values);
+   
       if (isEdit) {
 
         const editData = {
@@ -149,12 +149,12 @@ const Calendario = () => {
         }
 
         const data = await createSchedule(createData)
-        // console.log("data", data)
+      
         if (data.success) {
           setOpen(false)
           validation.resetForm()
         } else {
-          console.log(data)
+      
           toast.error(data.error)
         }
       }
@@ -173,11 +173,7 @@ const Calendario = () => {
     if (!reservations) return [];
     return reservations.map((r: any) => {
 
-      console.log("RAW FROM BACKEND", r.startDate);
-      console.log("AS DATE", new Date(r.startDate).toString());
-      console.log("AS ISO", new Date(r.startDate).toISOString());
 
-      // console.log("rrrr", r)
 
       // const start = toDatetimeLocal(r.startDate);
 
@@ -331,7 +327,6 @@ const Calendario = () => {
           setStartDateValue(info.startStr.toString())
 
 
-          console.log("Estoy aca", info.startStr)
           validation.resetForm()
           setIsEdit(false)
           // setSelectedSlot({
@@ -359,7 +354,7 @@ const Calendario = () => {
           if (info?.event?.id) {
             setIsEdit(true)
             const { data } = await getOneSchedule(info?.event?.id)
-            console.log("scheduleData", data)
+          
             if (data) {
               validation.setValues({
                 title: data.title,
@@ -377,10 +372,6 @@ const Calendario = () => {
 
 
 
-          console.log(info.event.id);
-          console.log(info.event.title);
-          console.log("Esta ingresando", info.event.start?.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }))
-          console.log("Esta ingresando", info.event.end?.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }))
         }}
 
 
@@ -391,7 +382,7 @@ const Calendario = () => {
         }}
         eventContent={(args) => {
 
-          console.log("LLego", args.event.extendedProps)
+
           const { user } = args.event.extendedProps
           const { userId }: any = useAuthStore.getState()
 

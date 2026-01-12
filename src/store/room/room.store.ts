@@ -19,7 +19,7 @@ const roomStore = create((set) => ({
         set({ loading: true });
         const response = await fetch(`${url}/api/room/${id}`);
         const data = await response.json()
-        console.log("data", data)
+       
         set({ room: data, loading: false })
 
     },
@@ -36,7 +36,7 @@ const roomStore = create((set) => ({
             });
             if (!response.ok) throw new Error("Error en el servidor");
             const data = await response.json();
-            console.log("data", data)
+   
             set((state: any) => ({ rooms: [...state.rooms, data], loading: false }));
             return { success: true };
         } catch (error: any) {

@@ -28,7 +28,7 @@ const userStore = create((set) => ({
                 body: JSON.stringify(user),
             });
             const data = await response.json()
-            console.log("data", data)
+    
             if (!response.ok) {
                 throw {
                     status: response.status,
@@ -40,7 +40,7 @@ const userStore = create((set) => ({
 
             return { success: true };
         } catch (error: any) {
-            console.log("error", error)
+           
             return { success: false, error: error.message, status: error.status };
         }
     },
@@ -58,7 +58,7 @@ const userStore = create((set) => ({
                 body: JSON.stringify(user),
             });
             const data = await response.json()
-            console.log("data", data)
+          
             if (!response.ok) {
                 throw {
                     status: response.status,
@@ -73,7 +73,7 @@ const userStore = create((set) => ({
 
             return { success: true };
         } catch (error: any) {
-            console.log("error", error)
+          
             return { success: false, error: error.message, status: error.status };
         }
     },
@@ -88,7 +88,7 @@ const userStore = create((set) => ({
 
         const response = await fetch(`${url}/api/auth/user?${params.toString()}`)
         const { data, meta } = await response.json()
-        console.log("data", data)
+       
         set({ users: data, meta: meta, search, loading: false })
     },
 
@@ -127,7 +127,7 @@ const userStore = create((set) => ({
                 },
             });
             const data = await response.json()
-            console.log("data", data)
+           
             if (!response.ok) {
                 throw {
                     status: response.status,
@@ -137,7 +137,7 @@ const userStore = create((set) => ({
             set((state: any) => ({ users: state.users.filter((user: any) => user.id !== id), meta: data.meta, loading: false }))
             return { success: true };
         } catch (error: any) {
-            console.log("error", error)
+
             return { success: false, error: error.message, status: error.status };
         }
     }

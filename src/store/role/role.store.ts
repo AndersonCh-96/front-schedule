@@ -13,7 +13,7 @@ const roleStore = create((set) => ({
 
     getAllRoles: async (page = 1, pageSize = 10) => {
         const token: any = useAuthStore.getState();
-        console.log("token", token)
+        
         set({ loading: true })
         const response = await fetch(`${url}/api/roles?page=${page}&limit=${pageSize}`, {
             method: "GET",
@@ -24,7 +24,7 @@ const roleStore = create((set) => ({
         })
         const data = await response.json()
         if (data.statusCode === 401) toast.error("No tienes permiso para acceder a esta ruta")
-        console.log("data", data)
+        
         set({
             roles: data.data || data,
             meta: data.meta || { page, pageCount: 1, total: data.length },

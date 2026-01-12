@@ -30,9 +30,6 @@ const useAuthStore = create(
 
                 if (data.statusCode === 401) return { success: false, error: data.message }
 
-                console.log("data", data)
-
-                console.log("data", data)
                 set({ user: data.email, userId: data.id, token: data.token, roles: data.roles, isAuthenticated: true, loading: false })
                 return { success: true }
             } catch (error: any) {

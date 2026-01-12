@@ -48,7 +48,6 @@ const Usuarios = () => {
       roles: Yup.array().required("Seleccione al menos un rol").min(1, "Seleccione al menos un rol"),
     }),
     onSubmit: async () => {
-
       if (isEdit) {
         const formUserUpdate = {
           name: validation.values.name,

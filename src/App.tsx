@@ -12,7 +12,7 @@ const App = () => {
 
 
 
-  console.log("allSchedules", allSchedules)
+  
   const today = new Date();
 
   useEffect(() => {
