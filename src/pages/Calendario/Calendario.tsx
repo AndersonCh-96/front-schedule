@@ -168,17 +168,17 @@ console.log("AS ISO", new Date(r.startDate).toISOString());
 
       // console.log("rrrr", r)
 
-      // const start = toDatetimeLocal(r.startDate);
+       const start = toDatetimeLocal(r.startDate);
 
-      // const end = toDatetimeLocal(r.endDate)
+       const end = toDatetimeLocal(r.endDate)
 
 
 
       return {
         id: r.id,
         title: r.title,
-        start: new Date(r.startDate).toISOString(),
-        end: new Date(r.endDate).toISOString(),
+        start: start,
+        end: end,
         backgroundColor: roomColors[r.room.name],
         borderColor: roomColors[r.room.name],
         textColor: "#000000",
