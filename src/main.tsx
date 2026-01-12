@@ -23,7 +23,7 @@ import NotFound from "./pages/NoFound/NotFound.tsx";
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <BrowserRouter>
-      <Toaster position="bottom-right" richColors closeButton pauseOnHover />
+      <Toaster position="bottom-right" richColors closeButton />
       <Routes>
         {/* Redirección inicial */}
         {/* <Route path="/" element={<Navigate to="/dashboard" />} /> */}
