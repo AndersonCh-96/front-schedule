@@ -95,7 +95,7 @@ const Login = () => {
 
                         </div>
                         <Button disabled={loading} type="submit" className="w-full cursor-pointer">
-                            Iniciando sesión
+                            {loading ? "Iniciando sesión..." : "Iniciar Sesión"}
                         </Button>
                     </form>
 
