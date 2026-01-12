@@ -7,12 +7,12 @@ import {
     CardHeader,
     CardTitle,
 } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
+
 import useAuthStore from "@/store/auth/auth.store";
 
 import { useFormik } from "formik";
 import { Eye, EyeOff } from "lucide-react";
-import { useEffect, useState } from "react";
+import {  useState } from "react";
 import * as Yup from "yup";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";

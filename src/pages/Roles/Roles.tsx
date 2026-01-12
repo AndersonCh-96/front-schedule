@@ -17,7 +17,7 @@ import * as Yup from "yup";
 import InputForm from "@/components/Input/InputForm";
 import { toast } from "sonner";
 import { Trash2Icon } from "lucide-react";
-import { Skeleton } from "@/components/ui/skeleton";
+
 import SckeletonCard from "@/components/Skeleton/SkeletonCard";
 
 const Roles = () => {
@@ -179,10 +179,7 @@ const Roles = () => {
         )
       }
 
-      {/* <DataTable
-        data={roles?.data || roles || []}
-        columns={rolesColumns}
-      /> */}
+   
 
 
       <Dialog open={deleteOpen} onOpenChange={setDeleteOpen}>

@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import useAuthStore from "../auth/auth.store";
-import { io, Socket } from "socket.io-client";
+import { io } from "socket.io-client";
 
 
 // interface ReservationState {

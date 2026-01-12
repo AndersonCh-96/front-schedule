@@ -1,14 +1,8 @@
-import { Calendar as CalendarIcon, Clock3, PencilIcon, Trash2Icon, Users } from "lucide-react";
+import {  Clock3 } from "lucide-react";
 import SchedulesStore from "@/store/schedules/schedule.store";
-import useAuthStore from "./store/auth/auth.store";
+
 import { useEffect } from "react";
 
-const formatDate = (date: Date) =>
-  date.toLocaleDateString("es-ES", {
-    weekday: "short",
-    day: "numeric",
-    month: "short",
-  });
 
 const App = () => {
 

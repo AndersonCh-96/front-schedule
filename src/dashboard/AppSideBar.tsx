@@ -1,4 +1,4 @@
-import { Calendar, Home, HomeIcon, Inbox, Search, Settings, User, Users2 } from "lucide-react";
+import { Calendar, HomeIcon, Settings, User, Users2 } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 
 import {
@@ -7,7 +7,7 @@ import {
   SidebarFooter,
   SidebarGroup,
   SidebarGroupContent,
-  SidebarGroupLabel,
+
   SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,

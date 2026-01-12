@@ -17,10 +17,9 @@ import * as Yup from "yup";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import roomStore from "@/store/room/room.store";
 import SchedulesStore from "@/store/schedules/schedule.store";
-import { Loader2, Trash2Icon } from "lucide-react";
+import { Trash2Icon } from "lucide-react";
 import { toast } from "sonner";
 import useAuthStore from "@/store/auth/auth.store";
-import { Spinner } from "@/components/ui/spinner";
 
 
 

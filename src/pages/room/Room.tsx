@@ -1,15 +1,15 @@
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
-  DialogClose,
+
   DialogContent,
   DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
+
 } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
+
 import {
   Select,
   SelectContent,
@@ -26,19 +26,15 @@ import InputForm from "@/components/Input/InputForm";
 import { toast } from "sonner";
 
 import { PencilIcon, Trash2Icon } from "lucide-react";
-import { Card, CardAction, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardAction, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import SckeletonCard from "@/components/Skeleton/SkeletonCard";
 
 const Room = () => {
   const { rooms, room, getAllRooms, createRoom, getOne, loading, deleteRoom, updateRoom }: any =
     roomStore();
 
-  const [form, setForm]: any = useState({
-    name: "",
-    description: "",
-  });
 
-  const [romStatus, setRoomStatus] = useState(true);
+
 
   const [open, setOpen] = useState<any>(false);
   const [isEdit, setIsEdit] = useState(false);
@@ -77,17 +73,6 @@ const Room = () => {
 
     },
   });
-
-  const handleSubmit = async (e: any) => {
-    e.preventDefault();
-    console.log("form", form);
-    const roomForm = {
-      ...form,
-      status: romStatus,
-    };
-
-    console.log("roomForm", roomForm);
-  };
 
   const handleEditRoom = async (id: string) => {
     setIsEdit(true);
