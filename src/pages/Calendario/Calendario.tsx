@@ -133,7 +133,7 @@ const Calendario = () => {
           setOpen(false)
           validation.resetForm()
           toast.success("Reserva actualizada exitosamente")
-        } 
+        }
 
       } else {
 
@@ -350,8 +350,8 @@ const Calendario = () => {
               validation.setValues({
                 title: data.title,
                 roomId: data.room.id,
-                startDate: toDatetimeLocal(data.startDate),
-                endDate: toDatetimeLocal(data.endDate),
+                startDate: data.startDate,
+                endDate: data.endDate,
               })
 
               setOpen(true)
