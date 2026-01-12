@@ -127,7 +127,13 @@ const Calendario = () => {
     onSubmit: async (values: any) => {
       console.log(values);
       if (isEdit) {
-        const data = await updateSchedule(schedule.id, values)
+
+        const editData = {
+          ...values,
+          startDate: new Date(values.startDate).toISOString(),
+          endDate: new Date(values.endDate).toISOString()
+        }
+        const data = await updateSchedule(schedule.id, editData)
 
         if (data.success) {
           setOpen(false)
