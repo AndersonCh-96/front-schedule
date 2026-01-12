@@ -19,6 +19,7 @@ import { io } from "socket.io-client";
 // }
 
 const url = "https://wellschedule-production.up.railway.app"
+// const url = "http://localhost:3000"
 
 const SchedulesStore = create<any>((set, get) => ({
 
@@ -39,8 +40,8 @@ const SchedulesStore = create<any>((set, get) => ({
         const response = await fetch(`${url}/api/reservation?${params.toString()}`)
         const data = await response.json()
 
-        console.log("data", data)
-        set({ schedules: data, loading: false })
+        console.log("entraaaa", data.data)
+        set({ schedules: data.data, loading: false })
     },
 
     initSocket: () => {
@@ -79,7 +80,7 @@ const SchedulesStore = create<any>((set, get) => ({
             set({ loading: true })
             const response = await fetch(`${url}/api/reservation/${id}`)
             const data = await response.json()
-            console.log("data", data)
+
             set({ schedule: data, loading: false })
             return { success: true, data }
         } catch (error) {
@@ -103,7 +104,7 @@ const SchedulesStore = create<any>((set, get) => ({
 
             const data = await response.json();
 
-            console.log("data", data)
+
 
             if (!response.ok) {
                 throw {
