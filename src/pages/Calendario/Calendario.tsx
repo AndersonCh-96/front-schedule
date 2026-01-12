@@ -136,8 +136,13 @@ const Calendario = () => {
         }
 
       } else {
+        const createData = {
+          ...values,
+          startDate: new Date(values.startDate).toISOString(),
+          endDate: new Date(values.endDate).toISOString()
+        }
 
-        const data = await createSchedule(values)
+        const data = await createSchedule(createData)
         // console.log("data", data)
         if (data.success) {
           setOpen(false)
