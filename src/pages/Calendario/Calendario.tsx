@@ -163,22 +163,22 @@ const Calendario = () => {
     return reservations.map((r: any) => {
 
       console.log("RAW FROM BACKEND", r.startDate);
-console.log("AS DATE", new Date(r.startDate).toString());
-console.log("AS ISO", new Date(r.startDate).toISOString());
+      console.log("AS DATE", new Date(r.startDate).toString());
+      console.log("AS ISO", new Date(r.startDate).toISOString());
 
       // console.log("rrrr", r)
 
-       const start = toDatetimeLocal(r.startDate);
+      const start = toDatetimeLocal(r.startDate);
 
-       const end = toDatetimeLocal(r.endDate)
+      const end = toDatetimeLocal(r.endDate)
 
 
 
       return {
         id: r.id,
         title: r.title,
-        start: start,
-        end: end,
+        start: new Date(r.startDate),
+        end: new Date(r.endDate),
         backgroundColor: roomColors[r.room.name],
         borderColor: roomColors[r.room.name],
         textColor: "#000000",
