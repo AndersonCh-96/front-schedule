@@ -37,28 +37,31 @@ export function AppSidebar() {
   const navigate = useNavigate();
   return (
     <Sidebar>
-      <SidebarHeader onClick={() => navigate("/dashboard")} className="text-center cursor-pointer font-thin">
+      <SidebarHeader onClick={() => navigate("/dashboard")} className="text-center cursor-pointer font-bold 
+       
+       text-lg rounded-lg mx-2">
         WellSchedule
       </SidebarHeader>
       <SidebarContent>
         <SidebarGroup>
-          <SidebarGroupLabel>Application</SidebarGroupLabel>
+          {/* <SidebarGroupLabel></SidebarGroupLabel> */}
           <SidebarGroupContent>
             <SidebarMenu>
 
               {
                 canSeeRoles && (<SidebarMenuItem>
-                  <SidebarMenuButton asChild>
+                  <SidebarMenuButton asChild className="  hover:scale-101 transition-transform ">
                     <Link to="/roles">
                       <Users2 />
                       <span>Roles</span>
+                  
                     </Link>
                   </SidebarMenuButton>
                 </SidebarMenuItem>)
               }
               {
                 canSeeUsers && (<SidebarMenuItem>
-                  <SidebarMenuButton asChild>
+                  <SidebarMenuButton asChild className="  hover:scale-101 transition-transform">
                     <Link to="/usuarios">
                       <User />
                       <span>Usuarios</span>
@@ -68,7 +71,7 @@ export function AppSidebar() {
               }
               {
                 canSeeSalas && (<SidebarMenuItem>
-                  <SidebarMenuButton asChild>
+                  <SidebarMenuButton asChild className="  hover:scale-101 transition-transform">
                     <Link to="/salas">
                       <HomeIcon />
                       <span>Salas</span>
@@ -77,7 +80,7 @@ export function AppSidebar() {
                 </SidebarMenuItem>)
               }
               <SidebarMenuItem>
-                <SidebarMenuButton asChild>
+                <SidebarMenuButton asChild className="  hover:scale-101 transition-transform ">
                   <Link to="/calendario">
                     <Calendar />
                     <span>Calendario</span>
@@ -87,7 +90,7 @@ export function AppSidebar() {
 
               {canSeeSettings && (
                 <SidebarMenuItem>
-                  <SidebarMenuButton asChild>
+                  <SidebarMenuButton asChild className="  hover:scale-101 transition-transform">
                     <Link to="/settings">
                       <Settings />
                       <span>Settings</span>
@@ -101,6 +104,7 @@ export function AppSidebar() {
       </SidebarContent>
       <SidebarFooter>
         <Button
+          className="cursor-pointer"
           onClick={() => {
             logoutUser();
             navigate("/login");

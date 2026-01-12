@@ -17,29 +17,14 @@ import * as Yup from "yup";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import roomStore from "@/store/room/room.store";
 import SchedulesStore from "@/store/schedules/schedule.store";
-import { ArrowRightSquare, PencilIcon, Trash2Icon } from "lucide-react";
+import { Loader2, Trash2Icon } from "lucide-react";
 import { toast } from "sonner";
 import useAuthStore from "@/store/auth/auth.store";
+import { Spinner } from "@/components/ui/spinner";
 
 
 
 
-const TIME_RANGE_MINUTES = {
-  start: 8 * 60 + 30,
-  end: 17 * 60 + 30,
-};
-
-const getMinutesFromTime = (value?: string) => {
-  if (!value) return undefined;
-  const [hour, minute] = value.split(":").map((segment) => Number(segment));
-  if (Number.isNaN(hour) || Number.isNaN(minute)) return undefined;
-  return hour * 60 + minute;
-};
-
-const isWithinAllowedRange = (minutes?: number) => {
-  if (minutes === undefined) return false;
-  return minutes >= TIME_RANGE_MINUTES.start && minutes <= TIME_RANGE_MINUTES.end;
-};
 
 const toDatetimeLocal = (iso?: string) => {
   if (!iso) return "";
@@ -55,12 +40,12 @@ const toDatetimeLocal = (iso?: string) => {
 
 const Calendario = () => {
 
-
   const [open, setOpen] = useState(false)
   const { rooms, getAllRooms }: any = roomStore()
   const [isEdit, setIsEdit] = useState(false)
+  const [startDateValue, setStartDateValue] = useState("")
 
-  const { schedules, schedule, getAllSchedules, createSchedule, getOneSchedule, deleteSchedule, updateSchedule, initSocket }: any = SchedulesStore()
+  const { schedules, schedule, getAllSchedules, createSchedule, getOneSchedule, deleteSchedule, updateSchedule, initSocket, loading }: any = SchedulesStore()
   const calendarRef = useRef<FullCalendar | null>(null);
 
   useEffect(() => {
@@ -74,11 +59,12 @@ const Calendario = () => {
     const api = calendarRef.current?.getApi();
     if (!api) return;
 
-    const start = api.view.activeStart.toISOString();
-    const end = api.view.activeEnd.toISOString();
+    const start = api.view.activeStart;
+    const end = api.view.activeEnd;
 
-    console.log("start", start)
-    console.log("end", end)
+    // Ajustar al inicio del día para evitar problemas de zona horaria en el backend
+    start.setUTCHours(0, 0, 0, 0);
+    end.setUTCHours(0, 0, 0, 0);
 
     getAllSchedules(start, end);
   };
@@ -90,11 +76,13 @@ const Calendario = () => {
 
 
   const initialValues = {
-    title: isEdit ? schedule?.title || "" : "",
-    startDate: isEdit ? toDatetimeLocal(schedule?.startDate) : "",
-    endDate: isEdit ? schedule?.endDate : "",
-    roomId: isEdit ? schedule?.room?.id || "" : "",
+    title: "",
+    startDate: startDateValue ? toDatetimeLocal(startDateValue) : "",
+    endDate: "",
+    roomId: "",
   };
+
+
 
   const validation: any = useFormik({
     enableReinitialize: true,
@@ -105,26 +93,36 @@ const Calendario = () => {
       startDate: Yup.string()
         .required("La hora de inicio es requerida")
         .test("start-time-range", "La hora de inicio debe estar entre 08:30 y 17:30", (value) => {
-          const startDate = value ? new Date(value) : undefined;
-          if (!startDate || Number.isNaN(startDate.getTime())) return false;
+          if (!value) return false;
+          const startDate = new Date(value);
+          if (Number.isNaN(startDate.getTime())) return false;
           const minutes = startDate.getHours() * 60 + startDate.getMinutes();
-          return isWithinAllowedRange(minutes);
+          return minutes >= 8 * 60 + 30 && minutes <= 17 * 60 + 30;
         }),
       endDate: Yup.string()
         .required("La hora de finalización es requerida")
-        .test("end-time-range", "La hora de finalización debe estar entre 08:30 y 17:30", (value) =>
-          isWithinAllowedRange(getMinutesFromTime(value))
-        )
+        .test("end-time-range", "La hora de finalización debe estar entre 08:30 y 17:30", (value) => {
+          if (!value) return false;
+          const endDate = new Date(value);
+          if (Number.isNaN(endDate.getTime())) return false;
+          const minutes = endDate.getHours() * 60 + endDate.getMinutes();
+          return minutes >= 8 * 60 + 30 && minutes <= 17 * 60 + 30;
+        })
+        .test("same-day", "La hora de finalización debe ser el mismo día que la hora de inicio", function (value) {
+          const { startDate } = this.parent;
+          if (!startDate || !value) return false;
+          const start = new Date(startDate);
+          const end = new Date(value);
+          if (Number.isNaN(start.getTime()) || Number.isNaN(end.getTime())) return false;
+          return start.toDateString() === end.toDateString();
+        })
         .test("end-after-start", "La hora de finalización debe ser posterior a la hora de inicio", function (value) {
           const { startDate } = this.parent;
           if (!startDate || !value) return false;
-          const startDateNew = new Date(startDate);
-          if (Number.isNaN(startDateNew.getTime())) return false;
-          const endMinutes = getMinutesFromTime(value);
-          if (endMinutes === undefined) return false;
-          const endDate = new Date(startDateNew);
-          endDate.setHours(Math.floor(endMinutes / 60), endMinutes % 60, 0, 0);
-          return endDate > startDateNew;
+          const start = new Date(startDate);
+          const end = new Date(value);
+          if (Number.isNaN(start.getTime()) || Number.isNaN(end.getTime())) return false;
+          return end > start;
         }),
     }),
     onSubmit: async (values: any) => {
@@ -136,14 +134,18 @@ const Calendario = () => {
           setOpen(false)
           validation.resetForm()
           toast.success("Reserva actualizada exitosamente")
-        }
+        } 
 
       } else {
+
         const data = await createSchedule(values)
-        console.log("data", data)
+        // console.log("data", data)
         if (data.success) {
           setOpen(false)
           validation.resetForm()
+        } else {
+          console.log(data)
+          toast.error(data.error)
         }
       }
       // setOpen(false)
@@ -153,33 +155,28 @@ const Calendario = () => {
   })
 
   const roomColors: Record<string, string> = {
-    "Sala Phisique": "#757575",
-    "Sala SmartFit": "#eba200",
+    "Sala Phisique": "#6B7280",
+    "Sala SmartFit": "#eba202",
 
   };
   const transformReservationsToEvents = (reservations: any) => {
-    return reservations?.map((r: any) => {
-
-      console.log("r", r)
-      const start = new Date(r.startDate);
-
-      const [hour, minute, second] = r.endDate
-        .split(":")
-        .map(Number);
-
-      const end = new Date(start);
-      end.setHours(hour, minute, second || 0, 0);
+    if (!reservations) return [];
+    return reservations.map((r: any) => {
 
 
-      if (end <= start) {
-        end.setDate(end.getDate() + 1);
-      }
+      // console.log("rrrr", r)
+
+      // const start = toDatetimeLocal(r.startDate);
+
+      // const end = toDatetimeLocal(r.endDate)
+
+
 
       return {
         id: r.id,
         title: r.title,
-        start,
-        end,
+        start: r.startDate,
+        end: r.endDate,
         backgroundColor: roomColors[r.room.name],
         borderColor: roomColors[r.room.name],
         textColor: "#000000",
@@ -206,24 +203,26 @@ const Calendario = () => {
 
 
 
+
+
   return (
-    <div className="">
-      <div className="flex gap-8 mb-2 justify-center">
-        <Button onClick={() => {
+    <div className=" ml-2 h-screen overflow-hidden">
+      <div className="flex gap-8  justify-center h-0 bg-red-300 absolute top-8 left-0 right-0 z-50 ">
+        <Button className="cursor-pointer" onClick={() => {
           calendarRef.current?.getApi().prev();
           loadEventsFromApi();
         }}>
           Anterior
         </Button>
 
-        <Button onClick={() => {
+        <Button className="bt-sm cursor-pointer" onClick={() => {
           calendarRef.current?.getApi().today();
           loadEventsFromApi();
         }}>
           Hoy
         </Button>
 
-        <Button onClick={() => {
+        <Button className="bt-sm cursor-pointer" onClick={() => {
           calendarRef.current?.getApi().next();
           loadEventsFromApi();
         }}>
@@ -231,31 +230,62 @@ const Calendario = () => {
         </Button>
       </div>
       <FullCalendar
+        height="100%"
 
         ref={calendarRef}
         buttonText={
           {
             week: 'Semana',
+            day: 'Día',
 
           }
         }
-
         plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin, momentTimezonePlugin]}
-        initialView="timeGridWeek"
-        timeZone="UTC"
+
+        timeZone="local"
         slotMinTime="08:00:00"
         slotMaxTime="18:00:00"
+        slotDuration="00:30:00"
+
+        expandRows={true}
+
+
+
+
         locale="es"
         weekText="10px"
         allDayText="Hora"
+        allDaySlot={false}
+
         initialDate={new Date()}
+        initialView="timeGridWeek"
+        slotEventOverlap={true}
+        eventOverlap={true}
+
+
+
+
+
+        windowResize={() => {
+
+          if (window.innerWidth >= 1920) {
+            calendarRef.current?.getApi().setOption('aspectRatio', 2.2);
+          } else {
+            calendarRef.current?.getApi().setOption('aspectRatio', 1.5);
+          }
+
+        }}
+
+
+
         // expandRows
-        handleWindowResize={true}
+
         slotLabelFormat={{
           hour: "2-digit",
           minute: "2-digit",
           hour12: false,
         }}
+
 
 
 
@@ -266,18 +296,29 @@ const Calendario = () => {
           month: "short",
         }}
         eventDidMount={(info) => {
-          console.log("info.event", info.event)
+
+
           info.el.title = `
         Título: ${info.event.title}
         Sala: ${info.event.extendedProps.roomId.name}
+        
      
         `;
         }}
 
 
+        validRange={{
+          start: validation.values.startTime ? new Date(validation.values.startTime) : undefined,
+        }}
+
 
         selectable
         select={(info) => {
+
+          setStartDateValue(info.startStr.toString())
+
+
+          console.log("Estoy aca", info.startStr)
           validation.resetForm()
           setIsEdit(false)
           // setSelectedSlot({
@@ -293,17 +334,36 @@ const Calendario = () => {
 
 
 
-        eventClick={async (info) => {
+        eventClick={async (info: any) => {
           const { user } = info.event.extendedProps
           const { userId }: any = useAuthStore.getState()
           const isOwner = user.id === userId
+
           if (!isOwner) {
             toast.error("No puedes editar esta reserva")
             return
           }
-          await getOneSchedule(info.event.id)
-          setOpen(true)
-          setIsEdit(true)
+          if (info?.event?.id) {
+            setIsEdit(true)
+            const { data } = await getOneSchedule(info?.event?.id)
+            console.log("scheduleData", data)
+            if (data) {
+              validation.setValues({
+                title: data.title,
+                roomId: data.room.id,
+                startDate: toDatetimeLocal(data.startDate),
+                endDate: toDatetimeLocal(data.endDate),
+              })
+
+              setOpen(true)
+
+            }
+          }
+
+
+
+
+
           console.log(info.event.id);
           console.log(info.event.title);
           console.log("Esta ingresando", info.event.start?.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }))
@@ -313,8 +373,8 @@ const Calendario = () => {
 
         headerToolbar={{
           // left: "prev today next",
-          center: "title",
-          right: "timeGridWeek",
+          center: "",
+          right: "timeGridWeek timeGridDay",
         }}
         eventContent={(args) => {
 
@@ -326,9 +386,8 @@ const Calendario = () => {
 
 
           return (
-            <div className="relative flex h-full w-full flex-col items-center justify-center text-center text-xs text-white">
 
-
+            <div className="h-full flex flex-wrap items-center justify-center w-full text-center text-xs text-white cursor-pointer">
               <img
                 src={
                   args.event.extendedProps?.roomId?.name === "Sala SmartFit"
@@ -337,32 +396,29 @@ const Calendario = () => {
                 }
                 alt="Logo sala"
                 className="
-      pointer-events-none
-      absolute
-      inset-[20%]
-      m-auto
-      h-25
-      w-25
-      object-contain
-      opacity-50
-      z-0
-    "
+          pointer-events-none
+          absolute
+          inset-[20%]
+          m-auto
+          h-25
+          w-25
+          object-contain
+          opacity-50
+          z-0
+        "
               />
 
 
-              <div className="absolute inset-0 bg-black/10 z-[1]" />
+              <div className="absolute inset-0 bg-black/10 z-[1] w-full  " />
 
-              <div className="relative z-10 space-y-1 px-1 flex items-center mx-auto">
-                {/* <p className="font-semibold text-[13px] leading-tight">
-                  {args.event.title}
-                </p> */}
+              <div className="relative z-10 space-y-1  flex flex-col items-center w-full mx-auto ">
 
-                <div className="flex flex-col">
-                  <p className="text-[12px] truncate font-bold">
+                <div className="flex flex-col w-full">
+                  <p className="text-[10px] truncate font-bold w-full">
                     {args.event.extendedProps.user.name}
                   </p>
 
-                  <p className="font-bold text-[12px]">
+                  <p className="font-bold text-[10px]">
                     {args.event.start?.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
                     -
                     {args.event.end?.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
@@ -371,6 +427,7 @@ const Calendario = () => {
 
                 {isOwner && (
                   <Trash2Icon
+
                     onClick={(e) => {
                       e.stopPropagation();
                       handleDeleteSchedule(args.event.id);
@@ -380,7 +437,6 @@ const Calendario = () => {
                 )}
               </div>
             </div>
-
 
           )
         }}
@@ -431,7 +487,7 @@ const Calendario = () => {
               </Select>
 
               <InputForm
-                type="time"
+                type="datetime-local"
                 placeholder="Hora de finalización"
                 name="endDate"
                 validation={validation}
@@ -444,8 +500,8 @@ const Calendario = () => {
                 }}>
                   Cancelar
                 </Button>
-                <Button type="submit" className="cursor-pointer">
-                  Guardar
+                <Button disabled={loading} type="submit" className="cursor-pointer">
+                  {loading ? "Guardando..." : "Guardar"}
                 </Button>
               </DialogFooter>
             </div>

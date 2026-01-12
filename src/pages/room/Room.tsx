@@ -17,24 +17,17 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableFooter,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
+
 import roomStore from "@/store/room/room.store";
 import { useEffect, useState } from "react";
-import { Formik, useFormik } from "formik";
+import { useFormik } from "formik";
 import * as Yup from "yup";
 import InputForm from "@/components/Input/InputForm";
 import { toast } from "sonner";
 
 import { PencilIcon, Trash2Icon } from "lucide-react";
 import { Card, CardAction, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import SckeletonCard from "@/components/Skeleton/SkeletonCard";
 
 const Room = () => {
   const { rooms, room, getAllRooms, createRoom, getOne, loading, deleteRoom, updateRoom }: any =
@@ -96,20 +89,6 @@ const Room = () => {
     console.log("roomForm", roomForm);
   };
 
-  const handleForm: any = (e: any) => {
-    const { name, value }: any = e.target;
-
-    setForm((prev: any) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
-
-  const handleSelect = (value: string) => {
-    setRoomStatus(value === "true");
-    console.log("value", value === "true");
-  };
-
   const handleEditRoom = async (id: string) => {
     setIsEdit(true);
     await getOne(id);
@@ -130,11 +109,7 @@ const Room = () => {
           onClick={() => {
             setOpen(true);
             setIsEdit(false);
-            // validation.setValues({
-            //   name: "",
-            //   description: "",
-            //   status: true,
-            // });
+
           }}
           className="cursor-pointer"
         >
@@ -161,13 +136,7 @@ const Room = () => {
               <div className="grid gap-4">
                 <div className="grid gap-3">
                   <label>Nombre de la sala</label>
-                  {/* <Input
-                    id="room-name"
-                    name="name"
-                    placeholder="Ej: Sala de reuniones A"
-                    onChange={handleForm}
-                    value={form?.name}
-                  /> */}
+
 
                   <InputForm
                     name="name"
@@ -204,9 +173,7 @@ const Room = () => {
                 </div>
               </div>
               <DialogFooter className="mt-2">
-                {/* <DialogClose asChild>
-                  <Button variant="outline">Cancelar</Button>
-                </DialogClose> */}
+
                 <Button
                   type="button"
                   className="cursor-pointer"
@@ -228,53 +195,57 @@ const Room = () => {
 
       <div className="flex gap-4 flex-wrap">
         {
-          rooms.map((item: any) => (
-            <Card key={item.id} className="w-full sm:w-[calc(50%-8px)] md:w-[calc(33.333%-11px)] lg:w-[calc(33.333%-11px)]">
-              <CardHeader>
+          loading ? (
+            <SckeletonCard />
+          ) : (
+            rooms.map((item: any) => (
+              <Card key={item.id} className="w-full sm:w-[calc(50%-8px)] md:w-[calc(33.333%-11px)] lg:w-[calc(33.333%-11px)]">
+                <CardHeader>
 
-                <div className="w-full h-32 bg-gray-200 rounded-md mb-2 flex items-center justify-center">
-                  <img
-                    src={item.image || "https://images.pexels.com/photos/10041250/pexels-photo-10041250.jpeg"}
-                    alt={item.name}
-                    className="w-full h-32 object-cover rounded-md"
-                  />
-                </div>
-                <CardTitle>
-                  {item.name}
-                </CardTitle>
-                <CardDescription>
-                  {item.description}
-                </CardDescription>
-                <CardAction className="flex  gap-2">
-                  <Button
-                    className="cursor-pointer"
-                    onClick={() => {
-                      handleEditRoom(item.id);
-                      validation.resetForm();
-                    }}
-                  >
-                    <PencilIcon className="hover:text-red-500 cursor-pointer " />
-                  </Button>
-                  <Button
-                    variant="destructive"
-                    onClick={() => {
-                      handleDeleteRoomModal(item.id);
+                  <div className="w-full h-32 bg-gray-200 rounded-md mb-2 flex items-center justify-center">
+                    <img
+                      src={item.image || "https://images.pexels.com/photos/10041250/pexels-photo-10041250.jpeg"}
+                      alt={item.name}
+                      className="w-full h-32 object-cover rounded-md"
+                    />
+                  </div>
+                  <CardTitle>
+                    {item.name}
+                  </CardTitle>
+                  <CardDescription>
+                    {item.description}
+                  </CardDescription>
+                  <CardAction className="flex  gap-2">
+                    <Button
+                      className="cursor-pointer"
+                      onClick={() => {
+                        handleEditRoom(item.id);
+                        validation.resetForm();
+                      }}
+                    >
+                      <PencilIcon className="hover:text-red-500 cursor-pointer " />
+                    </Button>
+                    <Button
+                      variant="destructive"
+                      onClick={() => {
+                        handleDeleteRoomModal(item.id);
 
-                    }}
-                    className="cursor-pointer"
-                  >
-                    <Trash2Icon className=" text-white-400 " />
-                  </Button>
-                </CardAction>
+                      }}
+                      className="cursor-pointer"
+                    >
+                      <Trash2Icon className=" text-white-400 " />
+                    </Button>
+                  </CardAction>
 
-              </CardHeader>
+                </CardHeader>
 
 
-              <CardFooter className="flex justify-between">
+                <CardFooter className="flex justify-between">
 
-              </CardFooter>
-            </Card>
-          ))
+                </CardFooter>
+              </Card>
+            ))
+          )
         }
       </div>
 

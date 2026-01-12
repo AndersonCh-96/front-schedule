@@ -246,4 +246,123 @@
     --sidebar-border: oklch(1 0 0 / 10%);
     --sidebar-ring: oklch(0.439 0 0);
   }
+@layer components {
+  /* ======================
+     BASE CALENDAR
+  ====================== */
+  .fc {
+    @apply text-sm text-gray-700 bg-white;
+  }
+
+  /* ======================
+     TOOLBAR
+  ====================== */
+  .fc-toolbar {
+    @apply mb-4;
+  }
+
+  .fc-toolbar-title {
+    @apply text-xl font-semibold tracking-tight text-gray-900;
+  }
+
+  .fc-button {
+    @apply bg-white border border-gray-200 text-gray-700
+           rounded-lg px-3 py-1.5
+           shadow-sm
+           hover:bg-gray-50
+           transition;
+  }
+
+  .fc-button-primary {
+    @apply bg-blue-600 text-white border-blue-600
+           hover:bg-blue-700;
+  }
+
+  .fc-button-primary:not(:disabled).fc-button-active {
+    @apply bg-blue-700;
+  }
+
+  /* ======================
+     GRID & HEADERS
+  ====================== */
+  .fc-col-header-cell {
+    @apply bg-black border-b border-gray-200 text-white;
+  }
+
+  .fc-col-header-cell-cushion {
+    @apply text-sm font-medium uppercase tracking-wide text-gray-500;
+  }
+
+  .fc-timegrid-slot-label {
+    @apply text-sm text-gray-700;
+  }
+
+  .fc-timegrid-slot {
+    @apply border-gray-100;
+  }
+
+  .fc-day-today {
+    @apply bg-blue-900;
+  }
+
+  /* ======================
+     EVENTS (CARDS)
+  ====================== */
+  .fc-timegrid-event {
+    @apply bg-blue-600 border-none rounded-xl shadow-sm;
+  }
+
+  .fc-timegrid-event .fc-event-main {
+    @apply p-2 text-white;
+  }
+
+  .fc-event-title {
+    @apply font-medium leading-tight;
+  }
+
+  .fc-event-time {
+    @apply text-xs opacity-90;
+  }
+
+  /* ======================
+     NOW INDICATOR
+  ====================== */
+  .fc-timegrid-now-indicator-line {
+    @apply border-red-500;
+  }
+
+  .fc-timegrid-now-indicator-arrow {
+    @apply border-red-500;
+  }
+
+  /* ======================
+     DARK MODE
+  ====================== */
+  .dark .fc {
+    @apply bg-gray-900 text-gray-200;
+  }
+
+  .dark .fc-col-header-cell {
+    @apply bg-gray-800 border-gray-700;
+  }
+
+  .dark .fc-day-today {
+    @apply bg-gray-800;
+  }
+
+  .dark .fc-timegrid-slot {
+    @apply border-gray-800;
+  }
+
+  .dark .fc-button {
+    @apply bg-gray-800 text-gray-200 border-gray-700
+           hover:bg-gray-700;
+  }
+
+  .dark .fc-timegrid-event {
+    @apply bg-blue-500;
+  }
+}
+
+
 }

@@ -1,5 +1,7 @@
 import { create } from "zustand";
 
+const url = "https://wellschedule-production.up.railway.app"
+
 const roomStore = create((set) => ({
     rooms: [],
     rom: {},
@@ -7,15 +9,15 @@ const roomStore = create((set) => ({
 
     getAllRooms: async () => {
         set({ loading: true });
-        const response = await fetch("http://localhost:3000/api/room");
+        const response = await fetch(`${url}/api/room`);
         const data = await response.json();
         set({ rooms: data, loading: false });
     },
 
     getOne: async (id: string) => {
-       
+
         set({ loading: true });
-        const response = await fetch(`http://localhost:3000/api/room/${id}`);
+        const response = await fetch(`${url}/api/room/${id}`);
         const data = await response.json()
         console.log("data", data)
         set({ room: data, loading: false })
@@ -25,7 +27,7 @@ const roomStore = create((set) => ({
     createRoom: async (room: any) => {
         try {
             set({ loading: true });
-            const response = await fetch("http://localhost:3000/api/room", {
+            const response = await fetch(`${url}/api/room`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -45,7 +47,7 @@ const roomStore = create((set) => ({
     updateRoom: async (id: string, body: any) => {
         try {
             set({ loading: true })
-            const response = await fetch(`http://localhost:3000/api/room/${id}`, {
+            const response = await fetch(`${url}/api/room/${id}`, {
                 method: "PATCH",
                 headers: {
                     "Content-Type": "application/json",
@@ -73,7 +75,7 @@ const roomStore = create((set) => ({
     deleteRoom: async (id: string) => {
         try {
             set({ loading: true });
-            const response = await fetch(`http://localhost:3000/api/room/${id}`, {
+            const response = await fetch(`${url}/api/room/${id}`, {
                 method: "DELETE",
             });
 

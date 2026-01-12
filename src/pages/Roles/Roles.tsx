@@ -17,9 +17,11 @@ import * as Yup from "yup";
 import InputForm from "@/components/Input/InputForm";
 import { toast } from "sonner";
 import { Trash2Icon } from "lucide-react";
+import { Skeleton } from "@/components/ui/skeleton";
+import SckeletonCard from "@/components/Skeleton/SkeletonCard";
 
 const Roles = () => {
-  const { roles, rol, meta, getAllRoles, createRole, getOne, updateRole, deleteRole }: any = roleStore();
+  const { roles, rol, meta, getAllRoles, createRole, getOne, updateRole, deleteRole, loading }: any = roleStore();
 
   const [pagination, setPagination] = useState({
     pageIndex: 0,
@@ -52,7 +54,7 @@ const Roles = () => {
         data.success ? toast.success("Rol actualizado exitosamente") : toast.error(`Error al actualizar el rol: ${data.error}`);
       } else {
         const data = await createRole(values);
-     setOpen(false);
+        setOpen(false);
         data.success ? toast.success("Rol creado exitosamente") : toast.error(`Error al crear el rol: ${data.error}`);
       }
       setOpen(false);
@@ -151,19 +153,37 @@ const Roles = () => {
         </DialogContent>
       </Dialog>
 
-      <DataTable
+
+      {
+        loading ? (
+
+          <SckeletonCard/>
+
+        ) : (
+          <>
+            <DataTable
+              data={roles?.data || roles || []}
+              columns={rolesColumns}
+            />
+
+            <DataTablePagination
+              pageIndex={pagination.pageIndex}
+              pageCount={meta?.pageCount || 1}
+              canPreviousPage={pagination.pageIndex > 0}
+              canNextPage={pagination.pageIndex < (meta?.pageCount || 1) - 1}
+              onPrevious={() => setPagination({ ...pagination, pageIndex: pagination.pageIndex - 1 })}
+              onNext={() => setPagination({ ...pagination, pageIndex: pagination.pageIndex + 1 })}
+            />
+
+          </>
+        )
+      }
+
+      {/* <DataTable
         data={roles?.data || roles || []}
         columns={rolesColumns}
-      />
+      /> */}
 
-      <DataTablePagination
-        pageIndex={pagination.pageIndex}
-        pageCount={meta?.pageCount || 1}
-        canPreviousPage={pagination.pageIndex > 0}
-        canNextPage={pagination.pageIndex < (meta?.pageCount || 1) - 1}
-        onPrevious={() => setPagination({ ...pagination, pageIndex: pagination.pageIndex - 1 })}
-        onNext={() => setPagination({ ...pagination, pageIndex: pagination.pageIndex + 1 })}
-      />
 
       <Dialog open={deleteOpen} onOpenChange={setDeleteOpen}>
         <DialogContent className="">

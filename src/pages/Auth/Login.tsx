@@ -19,7 +19,7 @@ import { toast } from "sonner";
 
 const Login = () => {
 
-    const { loginUser }: any = useAuthStore();
+    const { loginUser, loading }: any = useAuthStore();
     const navigate = useNavigate();
 
 
@@ -94,8 +94,8 @@ const Login = () => {
                             </div>
 
                         </div>
-                        <Button type="submit" className="w-full cursor-pointer">
-                            Iniciar Sesión
+                        <Button disabled={loading} type="submit" className="w-full cursor-pointer">
+                           {loading ? "Iniciando sesión..." : "Iniciar Sesión"}
                         </Button>
                     </form>
 

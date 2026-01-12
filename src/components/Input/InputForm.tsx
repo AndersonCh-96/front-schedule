@@ -13,7 +13,7 @@ const InputForm = ({ validation, placeholder, name, type = "text" }: any) => {
         onBlur={validation.onBlur}
       />
       {validation.touched[name] && validation.errors[name] && (
-        <p className="text-red-500 text-sm">{validation.errors[name]}</p>
+        <p className="text-red-500 text-xs">{validation.errors[name]}</p>
       )}
     </div>
   );

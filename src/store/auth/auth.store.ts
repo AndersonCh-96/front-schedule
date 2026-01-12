@@ -2,6 +2,8 @@ import axios from "axios";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
+const url="https://wellschedule-production.up.railway.app"
+
 const useAuthStore = create(
     persist((set) => ({
         user: null,
@@ -17,7 +19,7 @@ const useAuthStore = create(
 
             try {
                 set({ loading: true })
-                const response = await fetch("http://localhost:3000/api/auth/login", {
+                const response = await fetch(`${url}/api/auth/login`, {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",

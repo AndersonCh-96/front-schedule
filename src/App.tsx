@@ -11,7 +11,7 @@ const formatDate = (date: Date) =>
   });
 
 const App = () => {
-  // const { isAuthenticated, userId }: any = useAuthStore();
+
   const { schedules, getAllSchedules }: any = SchedulesStore();
 
   const allSchedules = Array.isArray(schedules) ? schedules : [];
@@ -38,14 +38,7 @@ const App = () => {
     );
   }).length;
 
-  const nextAppointment = allSchedules
-    .map((event: any) => ({
-      ...event,
-      date: new Date(event.startDate),
-    }))
-    .sort((a: any, b: any) => a.date.getTime() - b.date.getTime())[0];
-
-  const sampleAppointments = allSchedules.slice(0, 4);
+ 
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-100 p-6">
@@ -59,7 +52,7 @@ const App = () => {
             </div>
             <p className="mt-4 text-4xl font-bold text-slate-900">{allSchedules.length}</p>
             <p className="text-sm text-slate-500 mt-2">agendamientos registrados</p>
-          </article> */}
+          </article>  */}
 
           <article className="rounded-3xl border border-slate-100 bg-slate-900/90 p-5 text-white shadow-2xl shadow-black/10">
             <div className="flex items-center justify-between">
@@ -70,22 +63,6 @@ const App = () => {
             <p className="text-sm text-slate-300 mt-2">agendamientos programados hoy</p>
           </article>
 
-          <article className="rounded-3xl border border-yellow-200 bg-gradient-to-br from-yellow-50 to-yellow-100 p-5 shadow-lg shadow-amber-200/40">
-            <div className="flex items-center justify-between">
-              <p className="text-xs tracking-[0.3em] uppercase text-amber-500">Próximo</p>
-              <Users className="h-5 w-5 text-amber-500" />
-            </div>
-            {nextAppointment ? (
-              <>
-                <p className="mt-4 text-2xl font-semibold text-slate-900">{nextAppointment.title}</p>
-                <p className="mt-2 text-sm text-slate-500">
-                  {formatDate(nextAppointment.date)}
-                </p>
-              </>
-            ) : (
-              <p className="mt-4 text-sm text-slate-500">No hay reuniones próximas</p>
-            )}
-          </article>
         </div>
 
         <section className="rounded-3xl border border-slate-100 bg-white/90 p-6 shadow-xl shadow-slate-200/70">
@@ -95,12 +72,12 @@ const App = () => {
               <h2 className="text-2xl font-bold text-slate-900">Últimas reservas</h2>
             </div>
             <span className="text-xs text-slate-500">
-              {sampleAppointments.length} elementos
+              {allSchedules.length} elementos
             </span>
           </div>
           <ul className="space-y-4">
-            {sampleAppointments.length ? (
-              sampleAppointments.map((appointment: any) => {
+            {allSchedules.length ? (
+              allSchedules.map((appointment: any) => {
                 const start = new Date(appointment.startDate);
                 const end = new Date(appointment.endDate || start.getTime());
                 return (
@@ -127,13 +104,7 @@ const App = () => {
                           month: "short",
                         })}
                       </p>
-                      {
-                        <div className="flex gap-2 justify-end mt-2">
-
-                          <Trash2Icon size={18} className=" text-slate-500 text-xs hover:scale-115 transition-all duration-200 cursor-pointer" />
-                          <PencilIcon size={18} className="text-slate-500 text-xs hover:scale-115 transition-all duration-200 cursor-pointer" />
-                        </div>
-                      }
+                     
                     </div>
                   </li>
                 );
