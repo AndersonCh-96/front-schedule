@@ -44,7 +44,7 @@ const Usuarios = () => {
     validationSchema: Yup.object({
       name: Yup.string().required("El nombre es requerido"),
       email: Yup.string().email("Email invalido").required("El email es requerido"),
-      password: Yup.string().required("La contraseña es requerida"),
+      password: Yup.string().required("La contraseña es requerida").min(6, "La contraseña debe tener al menos 6 caracteres"),
       roles: Yup.array().required("Seleccione al menos un rol").min(1, "Seleccione al menos un rol"),
     }),
     onSubmit: async () => {
