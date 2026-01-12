@@ -12,7 +12,7 @@ import useAuthStore from "@/store/auth/auth.store";
 
 import { useFormik } from "formik";
 import { Eye, EyeOff } from "lucide-react";
-import {  useState } from "react";
+import { useState } from "react";
 import * as Yup from "yup";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
@@ -45,7 +45,7 @@ const Login = () => {
                 toast.error(data.error)
             }
             console.log("Login values:", values);
-            
+
         },
     });
 
@@ -95,7 +95,7 @@ const Login = () => {
 
                         </div>
                         <Button disabled={loading} type="submit" className="w-full cursor-pointer">
-                           {loading ? "Iniciando sesión..." : "Iniciar Sesión"}
+                            Iniciando sesión
                         </Button>
                     </form>
 
