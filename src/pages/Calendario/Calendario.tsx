@@ -168,9 +168,9 @@ const Calendario = () => {
 
       // console.log("rrrr", r)
 
-      const start = toDatetimeLocal(r.startDate);
+      // const start = toDatetimeLocal(r.startDate);
 
-      const end = toDatetimeLocal(r.endDate)
+      // const end = toDatetimeLocal(r.endDate)
 
 
 
