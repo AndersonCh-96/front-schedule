@@ -162,6 +162,9 @@ const Calendario = () => {
     if (!reservations) return [];
     return reservations.map((r: any) => {
 
+      console.log("RAW FROM BACKEND", r.startDate);
+console.log("AS DATE", new Date(r.startDate).toString());
+console.log("AS ISO", new Date(r.startDate).toISOString());
 
       // console.log("rrrr", r)
 
@@ -174,8 +177,8 @@ const Calendario = () => {
       return {
         id: r.id,
         title: r.title,
-        start: new Date(r.startDate),
-        end: new Date(r.endDate),
+        start: new Date(r.startDate).toISOString(),
+        end: new Date(r.endDate).toISOString(),
         backgroundColor: roomColors[r.room.name],
         borderColor: roomColors[r.room.name],
         textColor: "#000000",
