@@ -38,7 +38,7 @@ const Login = () => {
         onSubmit: async (values) => {
 
             const data = await loginUser(values.email, values.password);
-          
+
             if (data.success) {
                 navigate("/calendario")
             } else {
@@ -94,7 +94,7 @@ const Login = () => {
                             </div>
 
                         </div>
-                        <Button disabled={loading} type="submit" className="w-full cursor-pointer">
+                        <Button type="submit" className="w-full cursor-pointer">
                             Iniciar Sesión
                         </Button>
                     </form>
