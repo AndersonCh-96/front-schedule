@@ -19,7 +19,7 @@ import { toast } from "sonner";
 
 const Login = () => {
 
-    const { loginUser, loading }: any = useAuthStore();
+    const { loginUser }: any = useAuthStore();
     const navigate = useNavigate();
 
 
@@ -86,9 +86,9 @@ const Login = () => {
                                 />
                                 {
                                     showPassword ? (
-                                        <EyeOff onClick={() => { setShowPassword(!showPassword) }} className="ml-auto" />
+                                        <EyeOff onClick={() => { setShowPassword(!showPassword) }} className="ml-auto cursor-pointer" />
                                     ) : (
-                                        <Eye onClick={() => { setShowPassword(!showPassword) }} className="ml-auto" />
+                                        <Eye onClick={() => { setShowPassword(!showPassword) }} className="ml-auto cursor-pointer" />
                                     )
                                 }
                             </div>
