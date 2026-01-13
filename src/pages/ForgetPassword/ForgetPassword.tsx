@@ -28,7 +28,7 @@ const ForgetPassword = () => {
                 .email("Email inválido")
                 .required("El email es requerido"),
         }),
-        onSubmit: async (values) => {
+        onSubmit: async () => {
             setIsSubmitting(true);
 
             try {
