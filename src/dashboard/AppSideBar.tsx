@@ -47,6 +47,16 @@ export function AppSidebar() {
           {/* <SidebarGroupLabel></SidebarGroupLabel> */}
           <SidebarGroupContent>
             <SidebarMenu>
+              <SidebarMenuItem>
+                <SidebarMenuButton asChild className="  hover:scale-101 transition-transform ">
+                  <Link to="/dashboard">
+                    <HomeIcon />
+                    <span>Dashboard</span>
+                  </Link>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+
+
 
               {
                 canSeeRoles && (<SidebarMenuItem>
@@ -54,7 +64,7 @@ export function AppSidebar() {
                     <Link to="/roles">
                       <Users2 />
                       <span>Roles</span>
-                  
+
                     </Link>
                   </SidebarMenuButton>
                 </SidebarMenuItem>)
