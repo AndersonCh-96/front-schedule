@@ -73,7 +73,7 @@ const Login = () => {
                         <div className="grid gap-2">
                             <div className="flex items-center">
                                 <label htmlFor="password">Contraseña</label>
-                                <a href="#" className="ml-auto inline-block text-sm underline">
+                                <a onClick={() => navigate("/forget-password")} className="ml-auto cursor-pointer inline-block text-sm underline">
                                     ¿Olvidaste tu contraseña?
                                 </a>
                             </div>

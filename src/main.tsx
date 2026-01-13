@@ -19,6 +19,7 @@ import Settings from "./pages/Settings/Settings.tsx";
 import Login from "./pages/Auth/Login.tsx";
 import PrivateRoutes from "./hooks/PrivateRoutes.tsx";
 import NotFound from "./pages/NoFound/NotFound.tsx";
+import ForgetPassword from "./pages/ForgetPassword/ForgetPassword.tsx";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
@@ -28,6 +29,7 @@ createRoot(document.getElementById("root")!).render(
         {/* Redirección inicial */}
         {/* <Route path="/" element={<Navigate to="/dashboard" />} /> */}
         <Route path="/login" element={<Login />} />
+        <Route path="/forget-password" element={<ForgetPassword />} />
 
         {/* Layout Dashboard */}
         <Route element={<PrivateRoutes />}>
