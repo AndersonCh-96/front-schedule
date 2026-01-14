@@ -125,7 +125,7 @@ const Calendario = () => {
         }),
     }),
     onSubmit: async (values: any) => {
-   
+
       if (isEdit) {
 
         const editData = {
@@ -149,12 +149,12 @@ const Calendario = () => {
         }
 
         const data = await createSchedule(createData)
-      
+
         if (data.success) {
           setOpen(false)
           validation.resetForm()
         } else {
-      
+
           toast.error(data.error)
         }
       }
@@ -354,7 +354,7 @@ const Calendario = () => {
           if (info?.event?.id) {
             setIsEdit(true)
             const { data } = await getOneSchedule(info?.event?.id)
-          
+
             if (data) {
               validation.setValues({
                 title: data.title,
@@ -456,7 +456,7 @@ const Calendario = () => {
           </DialogHeader>
 
           <form onSubmit={validation.handleSubmit}>
-            <div className="space-y-4">
+            <div className="space-y-2">
 
               <InputForm
                 placeholder="Título de la reunión"
@@ -464,13 +464,7 @@ const Calendario = () => {
                 validation={validation}
               />
 
-              <InputForm
-                type="datetime-local"
-                placeholder="Hora de inicio"
-                name="startDate"
-                validation={validation}
 
-              />
 
               <Select
                 onValueChange={(value) => {
@@ -488,17 +482,37 @@ const Calendario = () => {
                     ))
                   }
                 </SelectContent>
+                {
+                  validation.errors.roomId && (
+                    <p className="text-red-500 text-xs">{validation.errors.roomId}</p>
+                  )
+                }
               </Select>
+              <div className="flex gap-4 w-full">
+                <div className="w-1/2">
+                  <label className="text-sm font-thin" htmlFor="startDate">Hora de inicio</label>
+                  <InputForm
+                    type="datetime-local"
+                    placeholder="Hora de inicio"
+                    name="startDate"
+                    validation={validation}
 
-              <InputForm
-                type="datetime-local"
-                placeholder="Hora de finalización"
-                name="endDate"
-                validation={validation}
-              />
+                  />
+                </div>
+
+                <div className="w-1/2">
+                  <label className="text-sm font-thin" htmlFor="endDate">Hora de finalización</label>
+                  <InputForm
+                    type="datetime-local"
+                    placeholder="Hora de finalización"
+                    name="endDate"
+                    validation={validation}
+                  />
+                </div>
+              </div>
 
               <DialogFooter>
-                <Button type="button" variant="outline" onClick={() => {
+                <Button className="cursor-pointer" type="button" variant="outline" onClick={() => {
                   setOpen(false)
                   validation.resetForm()
                 }}>
