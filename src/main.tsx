@@ -20,6 +20,7 @@ import Login from "./pages/Auth/Login.tsx";
 import PrivateRoutes from "./hooks/PrivateRoutes.tsx";
 import NotFound from "./pages/NoFound/NotFound.tsx";
 import ForgetPassword from "./pages/ForgetPassword/ForgetPassword.tsx";
+import Profile from "./pages/Auth/Profile.tsx";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
@@ -41,6 +42,7 @@ createRoot(document.getElementById("root")!).render(
             <Route path="/calendario" element={<Calendario />} />
             <Route path="/settings" element={<Settings />} />
             <Route path="*" element={<NotFound />} />
+            <Route path="/profile" element={<Profile />} />
 
           </Route>
         </Route>

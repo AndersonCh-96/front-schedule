@@ -140,6 +140,16 @@ export function AppSidebar() {
                     </SidebarMenuButton>
                   </SidebarMenuItem>
                 )}
+
+
+                <SidebarMenuItem>
+                  <SidebarMenuButton asChild className="  hover:scale-101 transition-transform ">
+                    <Link to="/profile">
+                      <HomeIcon />
+                      <span>Perfil</span>
+                    </Link>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
               </SidebarMenu>
             </SidebarGroupContent>
           </SidebarGroup>
