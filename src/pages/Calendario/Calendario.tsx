@@ -451,8 +451,8 @@ const Calendario = () => {
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent>
           <DialogHeader className="r">
-            <DialogTitle className="text-center">{isEdit ? "Editar reunión" : "Agendar reunión"}</DialogTitle>
-            <DialogDescription className="text-center font-thin">Complete los datos para crear una nueva reunión</DialogDescription>
+            <DialogTitle className="text-center">{isEdit ? "Editar sala" : "Agendar sala"}</DialogTitle>
+            <DialogDescription className="text-center font-thin">Complete los datos para crear una nueva sala</DialogDescription>
           </DialogHeader>
 
           <form onSubmit={validation.handleSubmit}>
