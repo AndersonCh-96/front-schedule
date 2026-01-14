@@ -1,4 +1,4 @@
-import { AlertCircle, Calendar, HomeIcon, Settings, User, Users2 } from "lucide-react";
+import { AlertCircle, Calendar, HomeIcon, Settings, User, User2Icon, Users2 } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 
 import {
@@ -145,7 +145,7 @@ export function AppSidebar() {
                 <SidebarMenuItem>
                   <SidebarMenuButton asChild className="  hover:scale-101 transition-transform ">
                     <Link to="/profile">
-                      <HomeIcon />
+                      <User2Icon />
                       <span>Perfil</span>
                     </Link>
                   </SidebarMenuButton>
