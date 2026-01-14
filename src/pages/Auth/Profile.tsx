@@ -20,13 +20,13 @@ import useAuthStore from "@/store/auth/auth.store";
 import userStore from "@/store/user/user.store";
 
 import { useFormik } from "formik";
-import { User, Mail, Phone, Calendar, Edit2, Save, X, Camera } from "lucide-react";
+import { User, Mail, Calendar, Edit2, Save, X } from "lucide-react";
 import { useState, useEffect } from "react";
 import * as Yup from "yup";
 import { toast } from "sonner";
 
 const Profile = () => {
-    const { user, userId, token }: any = useAuthStore();
+    const { user, userId }: any = useAuthStore();
     const { getUser, updateUser, loading }: any = userStore();
     const [userData, setUserData] = useState<any>(null);
     const [isEditing, setIsEditing] = useState(false);
