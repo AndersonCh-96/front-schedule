@@ -17,9 +17,11 @@ import * as Yup from "yup";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import roomStore from "@/store/room/room.store";
 import SchedulesStore from "@/store/schedules/schedule.store";
-import { Trash2Icon } from "lucide-react";
+import { LoaderIcon, Trash2Icon } from "lucide-react";
 import { toast } from "sonner";
 import useAuthStore from "@/store/auth/auth.store";
+import userStore from "@/store/user/user.store";
+import SelectMultiple from "@/components/Input/SelectMultiple";
 
 
 
@@ -43,7 +45,8 @@ const Calendario = () => {
   const { rooms, getAllRooms }: any = roomStore()
   const [isEdit, setIsEdit] = useState(false)
   const [startDateValue, setStartDateValue] = useState("")
-
+  const { users, getUsers }: any = userStore()
+  // const [selectDataParticipants, setSelectDataParticipants] = useState([])
   const { schedules, schedule, getAllSchedules, createSchedule, getOneSchedule, deleteSchedule, updateSchedule, initSocket, loading }: any = SchedulesStore()
   const calendarRef = useRef<FullCalendar | null>(null);
 
@@ -51,6 +54,10 @@ const Calendario = () => {
     getAllRooms()
     initSocket()
     // getAllSchedules()
+  }, [])
+
+  useEffect(() => {
+    getUsers()
   }, [])
 
 
@@ -79,6 +86,7 @@ const Calendario = () => {
     startDate: startDateValue ? toDatetimeLocal(startDateValue) : "",
     endDate: "",
     roomId: "",
+    participants: [],
   };
 
 
@@ -89,6 +97,7 @@ const Calendario = () => {
     validationSchema: Yup.object({
       title: Yup.string().required("El título es requerido"),
       roomId: Yup.string().required("La sala es requerida"),
+
       startDate: Yup.string()
         .required("La hora de inicio es requerida")
         .test("start-time-range", "La hora de inicio debe estar entre 08:30 y 17:30", (value) => {
@@ -144,9 +153,11 @@ const Calendario = () => {
       } else {
         const createData = {
           ...values,
+          participants: values.participants.map((item: any) => item.label) || [],
           startDate: new Date(values.startDate).toISOString(),
           endDate: new Date(values.endDate).toISOString()
         }
+
 
         const data = await createSchedule(createData)
 
@@ -154,7 +165,6 @@ const Calendario = () => {
           setOpen(false)
           validation.resetForm()
         } else {
-
           toast.error(data.error)
         }
       }
@@ -208,6 +218,10 @@ const Calendario = () => {
     toast.success("Reserva eliminada exitosamente")
   }
 
+
+  const setSelectParticipants = (options: any) => {
+    validation.setFieldValue("participants", options);
+  }
 
 
 
@@ -341,7 +355,6 @@ const Calendario = () => {
 
 
 
-
         eventClick={async (info: any) => {
           const { user } = info.event.extendedProps
           const { userId }: any = useAuthStore.getState()
@@ -355,12 +368,14 @@ const Calendario = () => {
             setIsEdit(true)
             const { data } = await getOneSchedule(info?.event?.id)
 
+
             if (data) {
               validation.setValues({
                 title: data.title,
                 roomId: data.room.id,
                 startDate: toDatetimeLocal(data.startDate),
                 endDate: toDatetimeLocal(data.endDate),
+                participants: data?.participants?.map((item: any) => (item)) || [],
               })
 
               setOpen(true)
@@ -430,14 +445,17 @@ const Calendario = () => {
                 </div>
 
                 {isOwner && (
-                  <Trash2Icon
-
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      handleDeleteSchedule(args.event.id);
-                    }}
-                    className="mx-auto h-4 w-4 cursor-pointer text-red-300 hover:scale-110"
-                  />
+                  loading ? (
+                    <LoaderIcon className="mx-auto h-4 w-4 animate-spin text-red-300" />
+                  ) : (
+                    <Trash2Icon
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleDeleteSchedule(args.event.id);
+                      }}
+                      className="mx-auto h-4 w-4 cursor-pointer text-red-300 hover:scale-110"
+                    />
+                  )
                 )}
               </div>
             </div>
@@ -509,6 +527,18 @@ const Calendario = () => {
                     validation={validation}
                   />
                 </div>
+              </div>
+
+              <div>
+
+                <SelectMultiple name="participants"
+                  options={users && users.map((user: any) => ({ value: user.id, label: user.email }))}
+                  validation={validation}
+                  selectOptions={setSelectParticipants}
+                  placeholder="Invite a los asistentes"
+
+                />
+
               </div>
 
               <DialogFooter>

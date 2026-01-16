@@ -19,7 +19,7 @@ import { io } from "socket.io-client";
 // }
 
 const url = "https://wellschedule-production.up.railway.app"
-// const url = "http://localhost:3000"
+//const url = "http://localhost:3000"
 
 const SchedulesStore = create<any>((set, get) => ({
 
@@ -35,7 +35,7 @@ const SchedulesStore = create<any>((set, get) => ({
         const params = new URLSearchParams()
         if (startDate) params.append("startDate", startDate)
         if (endDate) params.append("endDate", endDate)
-  
+
 
         const response = await fetch(`${url}/api/reservation?${params.toString()}`)
         const data = await response.json()
@@ -83,7 +83,7 @@ const SchedulesStore = create<any>((set, get) => ({
             set({ schedule: data, loading: false })
             return { success: true, data }
         } catch (error) {
-     
+
             return { success: false }
         }
     },
@@ -153,7 +153,7 @@ const SchedulesStore = create<any>((set, get) => ({
             }));
             return { success: true };
         } catch (error: any) {
-       
+
             set({ loading: false });
             return { success: false, error: error.message, status: error.status };
         }
@@ -189,7 +189,7 @@ const SchedulesStore = create<any>((set, get) => ({
             }));
             return { success: true };
         } catch (error: any) {
-           
+
             return { success: false, error: error.message, status: error.status };
         }
 

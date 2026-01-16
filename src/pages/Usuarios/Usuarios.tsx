@@ -112,7 +112,7 @@ const Usuarios = () => {
       validation.setValues({
         name: userData.name,
         email: userData.email,
-        password: '', // No se debe precargar la contraseña
+        password: '', 
         roles: userData.roles.map((role: any) => ({ value: role.id, label: role.name }))
       });
       setIsEdit(true);
@@ -240,7 +240,10 @@ const Usuarios = () => {
 
               <div className="grid gap-3">
                 <label >Roles</label>
-                <SelectMultiple name="roles" selectOptions={selectOptions} validation={validation} options={roles && roles.map((role: any) => ({ value: role.id, label: role.name }))} />
+                <SelectMultiple name="roles" selectOptions={selectOptions} 
+                validation={validation}
+                 options={roles && roles.map((role: any) => 
+                 ({ value: role.id, label: role.name }))} />
               </div>
 
             </div>
