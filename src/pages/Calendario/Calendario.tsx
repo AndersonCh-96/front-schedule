@@ -165,8 +165,8 @@ const Calendario = () => {
   })
 
   const roomColors: Record<string, string> = {
-    "Sala Phisique": "#6B7280",
-    "Sala SmartFit": "#eba202",
+    "Sala Phisique": "#aa182c",
+    "Sala SmartFit": "#ffb71b",
 
   };
   const transformReservationsToEvents = (reservations: any) => {
