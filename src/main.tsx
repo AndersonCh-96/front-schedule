@@ -34,7 +34,9 @@ createRoot(document.getElementById("root")!).render(
 
         {/* Layout Dashboard */}
         <Route element={<PrivateRoutes />}>
+          <Route path="/agenda" element={<Calendario />} />
           <Route element={<Layout />}>
+            <Route path="/" element={<App />} />
             <Route path="/dashboard" element={<App />} />
             <Route path="/usuarios" element={<Usuarios />} />
             <Route path="/roles" element={<Roles />} />

@@ -216,7 +216,7 @@ const Calendario = () => {
 
   return (
     <div className=" ml-2 h-screen overflow-hidden">
-      <div className="flex gap-8  justify-center h-0 bg-red-300 absolute top-8 left-0 right-0 z-50 ">
+      <div className="flex gap-8 -mt-2  justify-center h-0 bg-red-300 absolute top-8 left-0 right-0 z-50 ">
         <Button className="cursor-pointer" onClick={() => {
           calendarRef.current?.getApi().prev();
           loadEventsFromApi();
@@ -418,7 +418,7 @@ const Calendario = () => {
               <div className="relative z-10 space-y-1  flex flex-col items-center w-full mx-auto ">
 
                 <div className="flex flex-col w-full">
-                  <p className="text-[10px] truncate font-bold w-full">
+                  <p className="md:text-md text-sm truncate font-bold w-full">
                     {args.event.extendedProps.user.name}
                   </p>
 
