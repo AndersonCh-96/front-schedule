@@ -392,7 +392,7 @@ const Calendario = () => {
           return (
 
             <div className="h-full flex flex-wrap items-center justify-center w-full text-center text-xs text-white cursor-pointer">
-              <img
+              {/* <img
                 src={
                   args.event.extendedProps?.roomId?.name === "Sala SmartFit"
                     ? "/img/smartfit.png"
@@ -410,7 +410,7 @@ const Calendario = () => {
           opacity-50
           z-0
         "
-              />
+              /> */}
 
 
               <div className="absolute inset-0 bg-black/10 z-[1] w-full  " />
