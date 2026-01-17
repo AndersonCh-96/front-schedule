@@ -135,14 +135,24 @@ const Calendario = () => {
     }),
     onSubmit: async (values: any) => {
 
-      if (isEdit) {
 
+
+      if (isEdit) {
         const editData = {
           ...values,
+          participants: values.participants.map((item: any) => {
+            return {
+              id: item.value,
+              email: item.label
+            }
+          }) || [],
           startDate: new Date(values.startDate).toISOString(),
           endDate: new Date(values.endDate).toISOString()
         }
+
+
         const data = await updateSchedule(schedule.id, editData)
+
 
         if (data.success) {
           setOpen(false)
@@ -153,10 +163,18 @@ const Calendario = () => {
       } else {
         const createData = {
           ...values,
-          participants: values.participants.map((item: any) => item.label) || [],
+          participants: values.participants.map((item: any) => {
+            return {
+              id: item.value,
+              email: item.label
+            }
+          }) || [],
           startDate: new Date(values.startDate).toISOString(),
           endDate: new Date(values.endDate).toISOString()
         }
+
+        console.log("createData", createData)
+
 
 
         const data = await createSchedule(createData)
@@ -369,13 +387,18 @@ const Calendario = () => {
             const { data } = await getOneSchedule(info?.event?.id)
 
 
+
+
             if (data) {
               validation.setValues({
                 title: data.title,
                 roomId: data.room.id,
                 startDate: toDatetimeLocal(data.startDate),
                 endDate: toDatetimeLocal(data.endDate),
-                participants: data?.participants?.map((item: any) => (item)) || [],
+                participants: data?.participants?.map((item: any) => ({
+                  value: item.id,
+                  label: item.email
+                })) || [],
               })
 
               setOpen(true)
