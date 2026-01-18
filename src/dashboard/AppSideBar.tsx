@@ -135,7 +135,7 @@ export function AppSidebar() {
                     <SidebarMenuButton asChild className="  hover:scale-101 transition-transform">
                       <Link to="/settings">
                         <Settings />
-                        <span>Settings</span>
+                        <span>Configuración</span>
                       </Link>
                     </SidebarMenuButton>
                   </SidebarMenuItem>
