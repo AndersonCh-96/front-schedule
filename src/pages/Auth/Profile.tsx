@@ -230,10 +230,7 @@ const Profile = () => {
                     <div className="border-t pt-4">
                         <h3 className="text-lg font-semibold mb-3">Información de la Cuenta</h3>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <div className="p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
-                                <p className="text-sm text-gray-600 dark:text-gray-400">ID de Usuario</p>
-                                <p className="font-mono text-sm">{userId}</p>
-                            </div>
+                          
                             <div className="p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
                                 <p className="text-sm text-gray-600 dark:text-gray-400">Estado</p>
                                 <p className="text-green-600 font-medium">Activo</p>

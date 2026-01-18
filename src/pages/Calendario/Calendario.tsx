@@ -534,11 +534,14 @@ const Calendario = () => {
                   <label className="text-sm font-thin" htmlFor="startDate">Hora de inicio</label>
                   <InputForm
                     type="datetime-local"
+                    min=""
                     placeholder="Hora de inicio"
                     name="startDate"
                     validation={validation}
 
                   />
+
+
                 </div>
 
                 <div className="w-1/2">
