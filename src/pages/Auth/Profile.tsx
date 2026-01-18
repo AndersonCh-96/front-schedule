@@ -32,7 +32,7 @@ const Profile = () => {
     const [isEditing, setIsEditing] = useState(false);
     const [showAvatarDialog, setShowAvatarDialog] = useState(false);
 
-    console.log("USer", userId)
+  
 
     const validation = useFormik({
         initialValues: {
@@ -47,7 +47,7 @@ const Profile = () => {
 
         }),
         onSubmit: async (values) => {
-            console.log("Values", values)
+           
             const result = await updateUser(userId, values);
             if (result.success) {
                 toast.success("Perfil actualizado exitosamente");
