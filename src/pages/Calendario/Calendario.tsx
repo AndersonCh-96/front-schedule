@@ -249,7 +249,7 @@ const Calendario = () => {
   return (
     <div className=" ml-2 h-screen overflow-hidden">
       <div className="flex gap-8 -mt-2  justify-center h-0 bg-red-300 absolute top-8 left-0 right-0 z-50 ">
-        <Button className="cursor-pointer" onClick={() => {
+        <Button className="cursor-pointer bg-[#ff5f00]" onClick={() => {
           calendarRef.current?.getApi().prev();
           loadEventsFromApi();
         }}>

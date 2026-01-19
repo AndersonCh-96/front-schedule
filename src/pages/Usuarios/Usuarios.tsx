@@ -53,7 +53,7 @@ const Usuarios = () => {
           name: validation.values.name,
           email: validation.values.email,
           password: validation.values.password,
-          roles: validation.values.roles.map((item: any) => item.value)
+          roles: validation.values.roles?.map((item: any) => item.value)
         }
         const update = await updateUser(user.id, formUserUpdate);
         if (update.success) {
@@ -69,7 +69,7 @@ const Usuarios = () => {
           name: validation.values.name,
           email: validation.values.email,
           password: validation.values.password,
-          roles: validation.values.roles.map((item: any) => item.label)
+          roles: validation.values.roles?.map((item: any) => item.label)
         }
 
         const addUser = await createUser(formUserCreate);
@@ -113,7 +113,7 @@ const Usuarios = () => {
         name: userData.name,
         email: userData.email,
         password: '', 
-        roles: userData.roles.map((role: any) => ({ value: role.id, label: role.name }))
+        roles: userData.roles?.map((role: any) => ({ value: role.id, label: role.name }))
       });
       setIsEdit(true);
       setOpen(true);
@@ -148,7 +148,7 @@ const Usuarios = () => {
       header: "Roles",
       accessorKey: "roles",
       cell: ({ row }: any) => (
-        <span className="">{row.original.roles.map((item: any) => item.name).join(", ")}</span>
+        <span className="">{row.original.roles?.map((item: any) => item.name).join(", ")}</span>
       ),
     },
 
@@ -242,7 +242,7 @@ const Usuarios = () => {
                 <label >Roles</label>
                 <SelectMultiple name="roles" selectOptions={selectOptions} 
                 validation={validation}
-                 options={roles && roles.map((role: any) => 
+                 options={roles && roles?.map((role: any) => 
                  ({ value: role.id, label: role.name }))} />
               </div>
 
