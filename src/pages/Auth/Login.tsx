@@ -5,7 +5,6 @@ import {
     CardContent,
     CardDescription,
     CardHeader,
-    CardTitle,
 } from "@/components/ui/card";
 
 import useAuthStore from "@/store/auth/auth.store";
