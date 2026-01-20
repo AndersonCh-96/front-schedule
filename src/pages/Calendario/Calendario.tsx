@@ -51,7 +51,7 @@ const Calendario = () => {
   const calendarRef = useRef<FullCalendar | null>(null);
 
 
-  console.log("usuarios", users)
+ 
   useEffect(() => {
     getAllRooms()
     initSocket()

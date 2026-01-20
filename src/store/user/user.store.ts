@@ -87,7 +87,7 @@ const userStore = create((set) => ({
         if (page) params.append("page", page)
         if (limit) params.append("limit", limit)
 
-        console.log("params", params.toString())
+
 
         const response = await fetch(`${url}/api/auth/user?${params.toString()}`)
 
