@@ -21,6 +21,7 @@ export function DataTablePagination({
     <div className="flex gap-4 py-2 justify-center" >
       <Button
         size="sm"
+        className="cursor-pointer"
         onClick={onPrevious}
         disabled={!canPreviousPage}
       >
@@ -33,6 +34,7 @@ export function DataTablePagination({
 
       <Button
         size="sm"
+        className="cursor-pointer"
         onClick={onNext}
         disabled={!canNextPage}
       >
