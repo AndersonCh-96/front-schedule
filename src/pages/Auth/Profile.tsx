@@ -32,7 +32,8 @@ const Profile = () => {
     const [isEditing, setIsEditing] = useState(false);
     const [showAvatarDialog, setShowAvatarDialog] = useState(false);
 
-  
+
+    console.log("USer", user)
 
     const validation = useFormik({
         initialValues: {
@@ -47,7 +48,7 @@ const Profile = () => {
 
         }),
         onSubmit: async (values) => {
-           
+
             const result = await updateUser(userId, values);
             if (result.success) {
                 toast.success("Perfil actualizado exitosamente");
@@ -81,6 +82,7 @@ const Profile = () => {
         );
     }
 
+    console.log("UserData", userData)
     return (
         <div className="container mx-auto p-6 max-w-4xl">
             <Card className="w-full">
@@ -89,7 +91,12 @@ const Profile = () => {
                         <div className="flex items-center space-x-4">
                             <div className="relative">
                                 <div className="w-20 h-20 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white text-2xl font-bold">
-                                    {userData?.name?.charAt(0)?.toUpperCase() || user?.charAt(0)?.toUpperCase()}
+
+                                    {userData?.photoUrl ? (
+                                        <img src={userData.photoUrl} alt="Avatar" className="w-20 h-20 rounded-full object-cover aspect-square" />
+                                    ) : (
+                                        userData?.name?.charAt(0)?.toUpperCase() || user?.charAt(0)?.toUpperCase()
+                                    )}
                                 </div>
                                 {/* <Button
                                     size="sm"
@@ -230,7 +237,7 @@ const Profile = () => {
                     <div className="border-t pt-4">
                         <h3 className="text-lg font-semibold mb-3">Información de la Cuenta</h3>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                          
+
                             <div className="p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
                                 <p className="text-sm text-gray-600 dark:text-gray-400">Estado</p>
                                 <p className="text-green-600 font-medium">Activo</p>
