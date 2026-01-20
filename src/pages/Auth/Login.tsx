@@ -16,6 +16,8 @@ import { useState } from "react";
 import * as Yup from "yup";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
+import logo from "@/assets/img/wellschedule.png";
+import logo2 from "@/assets/img/well-transparent.png";
 
 const Login = () => {
 
@@ -50,57 +52,64 @@ const Login = () => {
     });
 
     return (
-        <div style={{ backgroundImage: "url('https://images.unsplash.com/photo-1659011557941-f61112150a77?q=80&w=924&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')" }}
-            className="flex items-center justify-center min-h-screen bg-gray-100 dark:bg-gray-900">
-            <Card className="mx-auto max-w-md w-full">
-                <CardHeader>
-                    <CardTitle className="text-2xl text-center">Iniciar Sesión</CardTitle>
-                    <CardDescription className="text-center">
-                        Ingresa tu email y contraseña para acceder a tu cuenta
-                    </CardDescription>
-                </CardHeader>
-                <CardContent>
-                    <form onSubmit={validation.handleSubmit} className="grid gap-4">
-                        <div className="grid gap-2">
-                            <label >Email</label>
-                            <InputForm
-                                name="email"
-                                placeholder="m@example.com"
-                                validation={validation}
-                            />
+        <div
+            className="flex md:flex-row flex-col items-center justify-center min-h-screen ">
 
-                        </div>
-                        <div className="grid gap-2">
-                            <div className="flex items-center">
-                                <label htmlFor="password">Contraseña</label>
-                                {/* <a onClick={() => navigate("/forget-password")} className="ml-auto cursor-pointer inline-block text-sm underline">
-                                    ¿Olvidaste tu contraseña?
-                                </a> */}
-                            </div>
-                            <div className="flex w-full items-center gap-2">
+            <div className="md:w-1/2 w-full h-full mx-auto bg-red-300">
+                <img src={logo} alt="" />
+            </div>
+
+            <div className="md:w-1/2 w-full min-h-screen flex items-center justify-center" style={{ backgroundImage: "url('https://images.unsplash.com/photo-1659011557941-f61112150a77?q=80&w=924&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')" }}>
+                <Card className="mx-auto max-w-md w-full">
+                    <CardHeader>
+                        {/* <CardTitle className="text-lg text-center">Iniciar Sesión</CardTitle> */}
+                        <CardDescription className="text-center flex items-center justify-center">
+                            <img src={logo2} className="w-20 h-12" alt="" />
+                        </CardDescription>
+                    </CardHeader>
+                    <CardContent className=" -mt-6">
+                        <form onSubmit={validation.handleSubmit} className="grid gap-4 text-sm">
+                            <div className="grid gap-2">
+                                <label >Email</label>
                                 <InputForm
-                                    name="password"
-                                    type={showPassword ? "text" : "password"}
-                                    placeholder="********"
+                                    name="email"
+                                    placeholder="m@example.com"
                                     validation={validation}
                                 />
-                                {
-                                    showPassword ? (
-                                        <EyeOff onClick={() => { setShowPassword(!showPassword) }} className="ml-auto cursor-pointer" />
-                                    ) : (
-                                        <Eye onClick={() => { setShowPassword(!showPassword) }} className="ml-auto cursor-pointer" />
-                                    )
-                                }
+
                             </div>
+                            <div className="grid gap-2">
+                                <div className="flex items-center">
+                                    <label htmlFor="password">Contraseña</label>
+                                    {/* <a onClick={() => navigate("/forget-password")} className="ml-auto cursor-pointer inline-block text-sm underline">
+                                    ¿Olvidaste tu contraseña?
+                                </a> */}
+                                </div>
+                                <div className="flex w-full items-center gap-2">
+                                    <InputForm
+                                        name="password"
+                                        type={showPassword ? "text" : "password"}
+                                        placeholder="********"
+                                        validation={validation}
+                                    />
+                                    {
+                                        showPassword ? (
+                                            <EyeOff onClick={() => { setShowPassword(!showPassword) }} className="ml-auto cursor-pointer" />
+                                        ) : (
+                                            <Eye onClick={() => { setShowPassword(!showPassword) }} className="ml-auto cursor-pointer" />
+                                        )
+                                    }
+                                </div>
 
-                        </div>
-                        <Button type="submit" className="w-full cursor-pointer">
-                            Iniciar Sesión
-                        </Button>
-                    </form>
+                            </div>
+                            <Button type="submit" className="w-full cursor-pointer">
+                                Iniciar Sesión
+                            </Button>
+                        </form>
 
-                </CardContent>
-            </Card>
+                    </CardContent>
+                </Card>
+            </div>
         </div>
     );
 };

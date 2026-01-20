@@ -1,4 +1,4 @@
-import {  Clock3 } from "lucide-react";
+import { Clock3 } from "lucide-react";
 import SchedulesStore from "@/store/schedules/schedule.store";
 
 import { useEffect } from "react";
@@ -12,7 +12,7 @@ const App = () => {
 
 
 
-  
+
   const today = new Date();
 
   useEffect(() => {
@@ -32,10 +32,10 @@ const App = () => {
     );
   }).length;
 
- 
+
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-100 p-6">
+    <div className="min-h-screen  p-6">
       <div className="max-w-6xl mx-auto space-y-6">
 
         <div className="grid gap-5 md:grid-cols-3">
@@ -54,7 +54,7 @@ const App = () => {
               <Clock3 className="h-5 w-5 text-slate-300" />
             </div>
             <p className="mt-4 text-4xl font-semibold">{todayCount}</p>
-            <p className="text-sm text-slate-300 mt-2">agendamientos programados hoy</p>
+            <p className="text-sm text-slate-300 mt-2">Agendamientos programados hoy</p>
           </article>
 
         </div>
@@ -98,7 +98,7 @@ const App = () => {
                           month: "short",
                         })}
                       </p>
-                     
+
                     </div>
                   </li>
                 );
