@@ -2,6 +2,7 @@ import { create } from "zustand";
 import useAuthStore from "../auth/auth.store";
 
 const url = "https://wellschedule-production.up.railway.app"
+//const url = "http://localhost:3000"
 
 const userStore = create((set) => ({
 
@@ -28,7 +29,7 @@ const userStore = create((set) => ({
                 body: JSON.stringify(user),
             });
             const data = await response.json()
-    
+
             if (!response.ok) {
                 throw {
                     status: response.status,
@@ -40,7 +41,7 @@ const userStore = create((set) => ({
 
             return { success: true };
         } catch (error: any) {
-           
+
             return { success: false, error: error.message, status: error.status };
         }
     },
@@ -58,7 +59,7 @@ const userStore = create((set) => ({
                 body: JSON.stringify(user),
             });
             const data = await response.json()
-          
+
             if (!response.ok) {
                 throw {
                     status: response.status,
@@ -73,7 +74,7 @@ const userStore = create((set) => ({
 
             return { success: true };
         } catch (error: any) {
-          
+
             return { success: false, error: error.message, status: error.status };
         }
     },
@@ -82,13 +83,16 @@ const userStore = create((set) => ({
     getUsers: async (page?: any, limit?: any, search?: string) => {
         set({ loading: true })
         const params = new URLSearchParams()
-        params.append("page", page || "1")
-        params.append("limit", limit || "10")
-        params.append("search", search || "")
+
+        if (page) params.append("page", page)
+        if (limit) params.append("limit", limit)
+
+        console.log("params", params.toString())
 
         const response = await fetch(`${url}/api/auth/user?${params.toString()}`)
+
         const { data, meta } = await response.json()
-       
+
         set({ users: data, meta: meta, search, loading: false })
     },
 
@@ -127,7 +131,7 @@ const userStore = create((set) => ({
                 },
             });
             const data = await response.json()
-           
+
             if (!response.ok) {
                 throw {
                     status: response.status,

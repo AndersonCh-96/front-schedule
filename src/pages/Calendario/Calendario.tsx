@@ -50,6 +50,8 @@ const Calendario = () => {
   const { schedules, schedule, getAllSchedules, createSchedule, getOneSchedule, deleteSchedule, updateSchedule, initSocket, loading }: any = SchedulesStore()
   const calendarRef = useRef<FullCalendar | null>(null);
 
+
+  console.log("usuarios", users)
   useEffect(() => {
     getAllRooms()
     initSocket()

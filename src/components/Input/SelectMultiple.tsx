@@ -4,7 +4,7 @@ const SelectMultiple = ({ validation, options, name ,selectOptions, placeholder}
     return (
         <div>
             <Select
-                noOptionsMessage={() => "No se encontraron roles"}
+                noOptionsMessage={() => "No se encontraron resultados"}
                 isMulti
                 name={name}
                 options={options}
