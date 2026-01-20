@@ -54,11 +54,12 @@ const Login = () => {
         <div
             className="flex md:flex-row flex-col items-center justify-center min-h-screen ">
 
-            <div className="md:w-1/2 w-full h-full mx-auto bg-red-300">
+            <div className="md:w-1/2 w-full h-full mx-auto">
                 <img src={logo} alt="" />
             </div>
 
-            <div className="md:w-1/2 w-full min-h-screen flex items-center justify-center" style={{ backgroundImage: "url('https://images.unsplash.com/photo-1659011557941-f61112150a77?q=80&w=924&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')" }}>
+            <div className="md:w-1/2 w-full min-h-screen flex items-center justify-center" style={{ backgroundImage: "url('https://images.pexels.com/photos/11871837/pexels-photo-11871837.jpeg')", 
+                backgroundSize: "cover", backgroundPosition: "center", backgroundRepeat: "no-repeat" }}>
                 <Card className="mx-auto max-w-md w-full">
                     <CardHeader>
                         {/* <CardTitle className="text-lg text-center">Iniciar Sesión</CardTitle> */}
@@ -66,7 +67,7 @@ const Login = () => {
                             <img src={logo2} className="w-20 h-12" alt="" />
                         </CardDescription>
                     </CardHeader>
-                    <CardContent className=" -mt-6">
+                    <CardContent className="-mt-6">
                         <form onSubmit={validation.handleSubmit} className="grid gap-4 text-sm">
                             <div className="grid gap-2">
                                 <label >Email</label>
