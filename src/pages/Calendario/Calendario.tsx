@@ -372,6 +372,11 @@ const Calendario = () => {
           setOpen(true)
         }}
 
+        selectAllow={(info) => {
+          const start = new Date(info.start);
+          const end = new Date(info.end);
+          return start >= new Date() && end >= new Date();
+        }}
 
 
 
