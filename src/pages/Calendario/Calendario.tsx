@@ -286,8 +286,8 @@ const Calendario = () => {
         plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin, momentTimezonePlugin]}
 
         timeZone="local"
-        slotMinTime="07:00:00"
-        slotMaxTime="20:00:00"
+        slotMinTime="07:30:00"
+        slotMaxTime="19:00:00"
         slotDuration="00:30:00"
 
         expandRows={true}
