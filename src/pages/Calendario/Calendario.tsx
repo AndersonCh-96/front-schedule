@@ -51,7 +51,7 @@ const Calendario = () => {
   const calendarRef = useRef<FullCalendar | null>(null);
 
 
- 
+
   useEffect(() => {
     getAllRooms()
     initSocket()
@@ -107,7 +107,7 @@ const Calendario = () => {
           const startDate = new Date(value);
           if (Number.isNaN(startDate.getTime())) return false;
           const minutes = startDate.getHours() * 60 + startDate.getMinutes();
-          return minutes >= 8 * 60 + 30 && minutes <= 17 * 60 + 30;
+          return minutes >= 7 * 60 + 30 && minutes <= 20 * 60 + 30;
         }),
       endDate: Yup.string()
         .required("La hora de finalización es requerida")
@@ -116,7 +116,7 @@ const Calendario = () => {
           const endDate = new Date(value);
           if (Number.isNaN(endDate.getTime())) return false;
           const minutes = endDate.getHours() * 60 + endDate.getMinutes();
-          return minutes >= 8 * 60 + 30 && minutes <= 17 * 60 + 30;
+          return minutes >= 7 * 60 + 30 && minutes <= 20 * 60 + 30;
         })
         .test("same-day", "La hora de finalización debe ser el mismo día que la hora de inicio", function (value) {
           const { startDate } = this.parent;
@@ -286,8 +286,8 @@ const Calendario = () => {
         plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin, momentTimezonePlugin]}
 
         timeZone="local"
-        slotMinTime="08:00:00"
-        slotMaxTime="18:00:00"
+        slotMinTime="07:00:00"
+        slotMaxTime="20:00:00"
         slotDuration="00:30:00"
 
         expandRows={true}
