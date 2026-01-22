@@ -48,14 +48,7 @@ const App = () => {
       <div className="max-w-6xl mx-auto space-y-6">
 
         <div className="grid gap-5 md:grid-cols-3">
-          {/* <article className="rounded-3xl border border-indigo-100 bg-white/80 p-5 shadow-lg shadow-indigo-100/50">
-            <div className="flex items-center justify-between">
-              <p className="text-xs text-indigo-500 uppercase tracking-[0.3em]">Total</p>
-              <CalendarIcon className="h-5 w-5 text-indigo-400" />
-            </div>
-            <p className="mt-4 text-4xl font-bold text-slate-900">{allSchedules.length}</p>
-            <p className="text-sm text-slate-500 mt-2">agendamientos registrados</p>
-          </article>  */}
+        
 
           <article className="rounded-3xl border border-slate-100 bg-slate-900/90 p-5 text-white shadow-2xl shadow-black/10">
             <div className="flex items-center justify-between">
