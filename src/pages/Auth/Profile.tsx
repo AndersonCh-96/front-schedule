@@ -33,7 +33,6 @@ const Profile = () => {
     const [showAvatarDialog, setShowAvatarDialog] = useState(false);
 
 
-    console.log("USer", user)
 
     const validation = useFormik({
         initialValues: {
@@ -82,7 +81,6 @@ const Profile = () => {
         );
     }
 
-    console.log("UserData", userData)
     return (
         <div className="container mx-auto p-6 max-w-4xl">
             <Card className="w-full">

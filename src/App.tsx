@@ -83,12 +83,12 @@ const App = () => {
                   >
                     <Tabs defaultValue="tab1" className="w-full" >
                       <TabsList>
-                        <TabsTrigger value="tab1">
+                        <TabsTrigger className="cursor-pointer" value="tab1">
                           <Calendar1/>
                         </TabsTrigger>
                        {
                         appointment.participants && appointment.participants.length > 0 && (
-                          <TabsTrigger value="tab2"><Users2Icon/></TabsTrigger>
+                          <TabsTrigger className="cursor-pointer" value="tab2"><Users2Icon/></TabsTrigger>
                         )
                        }
                       </TabsList>

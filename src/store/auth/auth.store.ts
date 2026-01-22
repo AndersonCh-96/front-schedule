@@ -29,7 +29,7 @@ const useAuthStore = create(
                     body: JSON.stringify({ email, password }),
                 })
                 const data = await response.json()
-                console.log("Data", data)
+
 
                 if (data.statusCode === 401) return { success: false, error: data.message }
 
