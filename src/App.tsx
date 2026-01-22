@@ -128,9 +128,9 @@ const App = () => {
                           appointment.participants && appointment.participants.length > 0 && (
                             <div className="flex gap-1 flex-wrap">
                               {
-                                appointment.participants.map((participant: any) => (
+                                appointment.participants?.map((participant: any) => (
                                   <div className="border shadow-sm rounded-lg p-2"  key={participant.id}>
-                                    <p className="text-xs">{participant.email}</p>
+                                    <p className="text-xs">{participant?.email}</p>
                                   </div>
                                 ))
                               }
