@@ -1,17 +1,30 @@
-import { Clock3 } from "lucide-react";
+import { Clock3, User2, Mail, Calendar1, Users2Icon } from "lucide-react";
 import SchedulesStore from "@/store/schedules/schedule.store";
 
 import { useEffect } from "react";
-
+import useAuthStore from "./store/auth/auth.store";
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from "@/components/ui/tabs"
+import {
+  Card,
+  CardContent,
+} from "@/components/ui/card"
+import Calendar from "./components/Calendar/Calendar";
 
 const App = () => {
 
   const { schedules, getAllSchedules }: any = SchedulesStore();
+  const { userName }: any = useAuthStore()
 
   const allSchedules = Array.isArray(schedules) ? schedules : [];
 
 
 
+  console.log("userName", userName)
 
   const today = new Date();
 
@@ -33,6 +46,7 @@ const App = () => {
   }).length;
 
 
+  console.log("appiment", allSchedules)
 
   return (
     <div className="min-h-screen  p-6">
@@ -79,27 +93,57 @@ const App = () => {
                     key={appointment.id}
                     className="flex items-center justify-between rounded-2xl border border-slate-100 bg-slate-50/70 p-4 hover:bg-slate-100  cursor-pointer"
                   >
-                    <div>
-                      <p className="font-semibold text-slate-900">{appointment.title}</p>
-                      <p className="text-sm text-slate-500">
-                        {appointment.room?.name || "Sala sin nombre"}
-                      </p>
-                    </div>
-                    <div className="text-right text-sm">
-                      <p className="font-semibold text-slate-900">
-                        {start.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
-                        {" - "}
-                        {end.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
-                      </p>
-                      <p className="text-slate-500">
-                        {start.toLocaleDateString("es-ES", {
-                          weekday: "short",
-                          day: "numeric",
-                          month: "short",
-                        })}
-                      </p>
+                    <Tabs defaultValue="tab1" className="w-full" >
+                      <TabsList>
+                        <TabsTrigger value="tab1">
+                          <Calendar1/>
+                        </TabsTrigger>
+                       {
+                        appointment.participants && appointment.participants.length > 0 && (
+                          <TabsTrigger value="tab2"><Users2Icon/></TabsTrigger>
+                        )
+                       }
+                      </TabsList>
+                      <TabsContent className="flex items-center justify-between" value="tab1">
+                        <div>
+                          <div className="flex items-center gap-1"> <User2 className="h-4 w-4 text-slate-500" /> <p>{appointment.user?.name}</p></div>
+                          <p className="font-semibold text-slate-900">{appointment.title}</p>
+                          <p className="text-sm text-slate-500">
+                            {appointment.room?.name || "Sala sin nombre"}
+                          </p>
+                        </div>
+                        <div className="text-right text-sm">
+                          <p className="font-semibold text-slate-900">
+                            {start.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
+                            {" - "}
+                            {end.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
+                          </p>
+                          <p className="text-slate-500">
+                            {start.toLocaleDateString("es-ES", {
+                              weekday: "short",
+                              day: "numeric",
+                              month: "short",
+                            })}
+                          </p>
 
-                    </div>
+                        </div>
+                      </TabsContent>
+                      <TabsContent value="tab2">
+                        {
+                          appointment.participants && appointment.participants.length > 0 && (
+                            <div className="flex gap-1 flex-wrap">
+                              {
+                                appointment.participants.map((participant: any) => (
+                                  <div className="border shadow-sm rounded-lg p-2"  key={participant.id}>
+                                    <p className="text-xs">{participant.email}</p>
+                                  </div>
+                                ))
+                              }
+                            </div>
+                          )
+                        }
+                      </TabsContent>
+                    </Tabs>
                   </li>
                 );
               })
