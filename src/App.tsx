@@ -13,13 +13,13 @@ import {
 const App = () => {
 
   const { schedules, getAllSchedules }: any = SchedulesStore();
-  const { userName }: any = useAuthStore()
+
 
   const allSchedules = Array.isArray(schedules) ? schedules : [];
 
 
 
-  console.log("userName", userName)
+
 
   const today = new Date();
 
@@ -41,7 +41,7 @@ const App = () => {
   }).length;
 
 
-  console.log("appiment", allSchedules)
+
 
   return (
     <div className="min-h-screen  p-6">
