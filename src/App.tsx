@@ -1,4 +1,4 @@
-import { Clock3, User2, Mail, Calendar1, Users2Icon } from "lucide-react";
+import { Clock3, User2, Calendar1, Users2Icon } from "lucide-react";
 import SchedulesStore from "@/store/schedules/schedule.store";
 
 import { useEffect } from "react";
@@ -9,11 +9,6 @@ import {
   TabsList,
   TabsTrigger,
 } from "@/components/ui/tabs"
-import {
-  Card,
-  CardContent,
-} from "@/components/ui/card"
-import Calendar from "./components/Calendar/Calendar";
 
 const App = () => {
 
