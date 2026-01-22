@@ -245,7 +245,7 @@ const Profile = () => {
                                     validationPassword.resetForm();
 
                                 }}>
-                                    Actualizar contraseña
+                                    Nueva contraseña
                                 </Button>
                             </div>
                         </div>
