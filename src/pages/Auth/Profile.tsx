@@ -11,6 +11,8 @@ import {
     Dialog,
     DialogContent,
 
+    DialogDescription,
+
     DialogFooter,
     DialogHeader,
     DialogTitle,
@@ -35,7 +37,7 @@ const Profile = () => {
     const { logoutUser }: any = useAuthStore()
 
 
-    const validarionPassword = useFormik({
+    const validationPassword = useFormik({
         initialValues: {
             password: "",
             confirmPassword: "",
@@ -240,7 +242,7 @@ const Profile = () => {
                             <div className="flex justify-end">
                                 <Button className="cursor-pointer" onClick={() => {
                                     setShowUpdatePassword(true);
-                                    validarionPassword.resetForm();
+                                    validationPassword.resetForm();
 
                                 }}>
                                     Actualizar contraseña
@@ -255,23 +257,23 @@ const Profile = () => {
                 <DialogContent className="flex flex-col justify-center">
                     <DialogHeader className="">
                         <DialogTitle>Actualizar contraseña</DialogTitle>
-                        {/* <DialogDescription>
-                            Esta función estará disponible próximamente. Podrás subir una imagen desde tu dispositivo.
-                        </DialogDescription> */}
+                         <DialogDescription>
+                            
+                        </DialogDescription> 
                     </DialogHeader>
 
                     <form onSubmit={(e) => {
                         e.preventDefault()
-                        validarionPassword.handleSubmit()
+                        validationPassword.handleSubmit()
                     }}>
                         <div className="space-y-4 text-sm">
                             <div className="flex flex-col gap-2 text-xs">
                                 <label htmlFor="">Contraseña</label>
-                                <InputForm validation={validarionPassword} name="password" label="Contraseña" type="password" placeholder="********" />
+                                <InputForm validation={validationPassword} name="password" label="Contraseña" type="password" placeholder="********" />
                             </div>
                             <div className="flex flex-col gap-2 text-xs">
                                 <label htmlFor="">Confirmar contraseña</label>
-                                <InputForm validation={validarionPassword} name="confirmPassword" label="Confirmar contraseña" type="password" placeholder="********" />
+                                <InputForm validation={validationPassword} name="confirmPassword" label="Confirmar contraseña" type="password" placeholder="********" />
                             </div>
                         </div>
 
