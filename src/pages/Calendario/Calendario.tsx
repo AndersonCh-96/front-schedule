@@ -17,11 +17,12 @@ import * as Yup from "yup";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import roomStore from "@/store/room/room.store";
 import SchedulesStore from "@/store/schedules/schedule.store";
-import { LoaderIcon, Trash2Icon } from "lucide-react";
+import { LoaderIcon } from "lucide-react";
 import { toast } from "sonner";
 import useAuthStore from "@/store/auth/auth.store";
 import userStore from "@/store/user/user.store";
 import SelectMultiple from "@/components/Input/SelectMultiple";
+import { MdFreeCancellation } from "react-icons/md";
 
 
 
@@ -102,21 +103,21 @@ const Calendario = () => {
 
       startDate: Yup.string()
         .required("La hora de inicio es requerida")
-        .test("start-time-range", "La hora de inicio debe estar entre 08:30 y 17:30", (value) => {
+        .test("start-time-range", "La hora de inicio debe estar entre 07:30 y 18:30", (value) => {
           if (!value) return false;
           const startDate = new Date(value);
           if (Number.isNaN(startDate.getTime())) return false;
           const minutes = startDate.getHours() * 60 + startDate.getMinutes();
-          return minutes >= 7 * 60 + 30 && minutes <= 20 * 60 + 30;
+          return minutes >= 7 * 60 + 30 && minutes <= 18 * 60 + 30;
         }),
       endDate: Yup.string()
         .required("La hora de finalización es requerida")
-        .test("end-time-range", "La hora de finalización debe estar entre 08:30 y 17:30", (value) => {
+        .test("end-time-range", "La hora de finalización debe estar entre 07:30 y 18:30", (value) => {
           if (!value) return false;
           const endDate = new Date(value);
           if (Number.isNaN(endDate.getTime())) return false;
           const minutes = endDate.getHours() * 60 + endDate.getMinutes();
-          return minutes >= 7 * 60 + 30 && minutes <= 20 * 60 + 30;
+          return minutes >= 7 * 60 + 30 && minutes <= 18 * 60 + 30;
         })
         .test("same-day", "La hora de finalización debe ser el mismo día que la hora de inicio", function (value) {
           const { startDate } = this.parent;
@@ -478,15 +479,16 @@ const Calendario = () => {
                   loading ? (
                     <LoaderIcon className="mx-auto h-4 w-4 animate-spin text-red-300" />
                   ) : (
-                    <Trash2Icon
+                    <MdFreeCancellation
                       onClick={(e) => {
                         e.stopPropagation();
                         handleDeleteSchedule(args.event.id);
                       }}
-                      className="mx-auto h-4 w-4 cursor-pointer text-red-300 hover:scale-110"
+                      className="mx-auto h-5 w-8 cursor-pointer text-red-600 hover:scale-110 transition-transform"
                     />
                   )
                 )}
+             
               </div>
             </div>
 
