@@ -55,7 +55,7 @@ const Profile = () => {
             if (updatePassword.success) {
                 toast.success("Contraseña actualizada exitosamente");
                 setShowUpdatePassword(false);
-                validarionPassword.resetForm();
+                validationPassword.resetForm();
                 logoutUser();
             } else {
                 toast.error(updatePassword.error || "Error al actualizar la contraseña");
