@@ -10,7 +10,7 @@ import {
 import {
     Dialog,
     DialogContent,
-    DialogDescription,
+
     DialogFooter,
     DialogHeader,
     DialogTitle,
@@ -30,7 +30,36 @@ const Profile = () => {
     const { getUser, updateUser, loading }: any = userStore();
     const [userData, setUserData] = useState<any>(null);
     const [isEditing, setIsEditing] = useState(false);
-    const [showAvatarDialog, setShowAvatarDialog] = useState(false);
+    const [showUpdatePassword, setShowUpdatePassword] = useState(false);
+
+    const { logoutUser }: any = useAuthStore()
+
+
+    const validarionPassword = useFormik({
+        initialValues: {
+            password: "",
+            confirmPassword: "",
+        },
+        validationSchema: Yup.object({
+            password: Yup.string().required("La contraseña es requerida"),
+            confirmPassword: Yup.string()
+                .oneOf([Yup.ref("password"), ""], "Las contraseñas no coinciden")
+                .required("La confirmación de contraseña es requerida"),
+        }),
+        onSubmit: async (values) => {
+            const updatePassword = await updateUser(userId, {
+                password: values.password,
+            });
+            if (updatePassword.success) {
+                toast.success("Contraseña actualizada exitosamente");
+                setShowUpdatePassword(false);
+                validarionPassword.resetForm();
+                logoutUser();
+            } else {
+                toast.error(updatePassword.error || "Error al actualizar la contraseña");
+            }
+        },
+    });
 
 
 
@@ -176,23 +205,7 @@ const Profile = () => {
                         </div>
 
                         <div className="space-y-4">
-                            {/* <div className="space-y-2">
-                                <label className="flex items-center text-sm font-medium">
-                                    <Phone className="h-4 w-4 mr-2" />
-                                    Teléfono
-                                </label>
-                                {isEditing ? (
-                                    <InputForm
-                                        name="phone"
-                                        placeholder="+1234567890"
-                                        validation={validation}
-                                    />
-                                ) : (
-                                    <p className="text-gray-700 dark:text-gray-300 p-2 border rounded-md">
-                                        {userData?.phone || "No especificado"}
-                                    </p>
-                                )}
-                            </div> */}
+
 
                             <div className="space-y-2">
                                 <label className="flex items-center text-sm font-medium">
@@ -213,24 +226,7 @@ const Profile = () => {
                         </div>
                     </div>
 
-                    {/* <div className="space-y-2">
-                        <label className="text-sm font-medium">Biografía</label>
-                        {isEditing ? (
-                            <textarea
-                                name="bio"
-                                className="w-full p-2 border rounded-md resize-none"
-                                rows={4}
-                                placeholder="Cuéntanos sobre ti..."
-                                onChange={validation.handleChange}
-                                onBlur={validation.handleBlur}
-                                value={validation.values.bio}
-                            />
-                        ) : (
-                            <p className="text-gray-700 dark:text-gray-300 p-2 border rounded-md min-h-[100px]">
-                                {userData?.bio || "No hay biografía disponible"}
-                            </p>
-                        )}
-                    </div> */}
+
 
                     <div className="border-t pt-4">
                         <h3 className="text-lg font-semibold mb-3">Información de la Cuenta</h3>
@@ -240,24 +236,55 @@ const Profile = () => {
                                 <p className="text-sm text-gray-600 dark:text-gray-400">Estado</p>
                                 <p className="text-green-600 font-medium">Activo</p>
                             </div>
+
+                            <div className="flex justify-end">
+                                <Button className="cursor-pointer" onClick={() => {
+                                    setShowUpdatePassword(true);
+                                    validarionPassword.resetForm();
+
+                                }}>
+                                    Actualizar contraseña
+                                </Button>
+                            </div>
                         </div>
                     </div>
                 </CardContent>
             </Card>
 
-            <Dialog open={showAvatarDialog} onOpenChange={setShowAvatarDialog}>
-                <DialogContent>
-                    <DialogHeader>
-                        <DialogTitle>Cambiar Foto de Perfil</DialogTitle>
-                        <DialogDescription>
+            <Dialog open={showUpdatePassword} onOpenChange={setShowUpdatePassword}>
+                <DialogContent className="flex flex-col justify-center">
+                    <DialogHeader className="">
+                        <DialogTitle>Actualizar contraseña</DialogTitle>
+                        {/* <DialogDescription>
                             Esta función estará disponible próximamente. Podrás subir una imagen desde tu dispositivo.
-                        </DialogDescription>
+                        </DialogDescription> */}
                     </DialogHeader>
-                    <DialogFooter>
-                        <Button onClick={() => setShowAvatarDialog(false)}>
-                            Cerrar
-                        </Button>
-                    </DialogFooter>
+
+                    <form onSubmit={(e) => {
+                        e.preventDefault()
+                        validarionPassword.handleSubmit()
+                    }}>
+                        <div className="space-y-4 text-sm">
+                            <div className="flex flex-col gap-2 text-xs">
+                                <label htmlFor="">Contraseña</label>
+                                <InputForm validation={validarionPassword} name="password" label="Contraseña" type="password" placeholder="********" />
+                            </div>
+                            <div className="flex flex-col gap-2 text-xs">
+                                <label htmlFor="">Confirmar contraseña</label>
+                                <InputForm validation={validarionPassword} name="confirmPassword" label="Confirmar contraseña" type="password" placeholder="********" />
+                            </div>
+                        </div>
+
+                        <DialogFooter className="mt-2">
+                            <Button type="button" className="cursor-pointer" onClick={() => setShowUpdatePassword(false)}>
+                                Cerrar
+                            </Button>
+                            <Button className="cursor-pointer" type="submit">
+                                Actualizar
+                            </Button>
+
+                        </DialogFooter>
+                    </form>
                 </DialogContent>
             </Dialog>
         </div>
