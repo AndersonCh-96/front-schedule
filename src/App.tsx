@@ -2,7 +2,7 @@ import { Clock3, User2, Calendar1, Users2Icon } from "lucide-react";
 import SchedulesStore from "@/store/schedules/schedule.store";
 
 import { useEffect } from "react";
-import useAuthStore from "./store/auth/auth.store";
+
 import {
   Tabs,
   TabsContent,
