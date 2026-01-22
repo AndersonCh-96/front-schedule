@@ -245,7 +245,7 @@ const Profile = () => {
                                     validationPassword.resetForm();
 
                                 }}>
-                                    Nueva contraseña
+                                    Actualizar contraseña
                                 </Button>
                             </div>
                         </div>
@@ -268,7 +268,7 @@ const Profile = () => {
                     }}>
                         <div className="space-y-4 text-sm">
                             <div className="flex flex-col gap-2 text-xs">
-                                <label htmlFor="">Contraseña</label>
+                                <label htmlFor="">Nueva contraseña</label>
                                 <InputForm validation={validationPassword} name="password" label="Contraseña" type="password" placeholder="********" />
                             </div>
                             <div className="flex flex-col gap-2 text-xs">
