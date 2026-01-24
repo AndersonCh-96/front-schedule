@@ -46,6 +46,7 @@ const Calendario = () => {
   const { rooms, getAllRooms }: any = roomStore()
   const [isEdit, setIsEdit] = useState(false)
   const [startDateValue, setStartDateValue] = useState("")
+  const [endDateValue, setEndDateValue] = useState("")
   const { users, getUsers }: any = userStore()
   // const [selectDataParticipants, setSelectDataParticipants] = useState([])
   const { schedules, schedule, getAllSchedules, createSchedule, getOneSchedule, deleteSchedule, updateSchedule, initSocket, loading }: any = SchedulesStore()
@@ -87,7 +88,7 @@ const Calendario = () => {
   const initialValues = {
     title: "",
     startDate: startDateValue ? toDatetimeLocal(startDateValue) : "",
-    endDate: "",
+    endDate: endDateValue ? toDatetimeLocal(endDateValue) : "",
     roomId: "",
     participants: [],
   };
@@ -185,6 +186,7 @@ const Calendario = () => {
         if (data.success) {
           setOpen(false)
           validation.resetForm()
+          toast.success("Reserva creada exitosamente")
         } else {
           toast.error(data.error)
         }
@@ -360,6 +362,7 @@ const Calendario = () => {
         select={(info) => {
 
           setStartDateValue(info.startStr.toString())
+          setEndDateValue(info.endStr.toString())
 
 
           validation.resetForm()
@@ -488,7 +491,7 @@ const Calendario = () => {
                     />
                   )
                 )}
-             
+
               </div>
             </div>
 
